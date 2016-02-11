@@ -46,20 +46,8 @@ exports.wgnews = function( counter , imageResolver ) {
                         //console.log( 'Using: handler'+ img );
                     }
                     else if(!img){
-                        // Fallback, extract from the content with regex.
-                        var m,
-                            urls = [],
-                            str = item.description,
-                            rex = /<img[^>]+src="?([^"\s]+)"?[^>]*\>/g;
-
-                        while ( m = rex.exec( str ) ) { // TODO: improve performance.
-                            urls.push( m[1] );
-                        }
-                        if(urls.length > 0){
-                            //console.log( 'Using: '+ urls[0] );
-                            img = urls[0]
-                        }
-
+                        // Fallback, extract image from the content
+                        img = extractFirstImageFromHtml(item.description);
                     }
                     icon.set('image', img);
                 }
@@ -90,4 +78,14 @@ exports.wgnews = function( counter , imageResolver ) {
 
         mods.details();
     });
+}
+
+
+function extractFirstImageFromHtml(html) {
+    var m,
+        rex = /<img[^>]+src="?([^"\s]+)"?[^>]*\>/g;
+
+    m = rex.exec( html );
+    if(m && m[1]) { return m[1]; }
+    return null;
 }
