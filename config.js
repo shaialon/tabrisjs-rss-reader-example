@@ -9,6 +9,7 @@ var config = {
     securitySalt: 'myxssrtabrix123', // You can add an extra security layer to LocalStorage by adding a security salt to the keys
     modules: 'details,news', // The filenames in the mod/ folder without the .js
     defaultModule: 'news',
+    theme: 'normal', // Theme accepts 'normal', 'light', 'full' ... anything else will just stick to system defaults.
     libs: 'page', // Libraries included in the lib/ folder we need in the app
 
     // For this particular app i added a news Sources setting so you can easily play with sources and check how fast is creating an app with Tabris

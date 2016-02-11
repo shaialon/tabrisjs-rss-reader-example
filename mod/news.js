@@ -11,16 +11,11 @@ exports.init = function() {
     var tabsDef = config.channels;
 
     // So we need a Tab Container
+    var tabFolderConfig = { left: 0, top: 0, right: 0, bottom:0 , elevation: 8 , tabBarLocation: "top", paging: true};
+    tabs = tabris.create('TabFolder', tabFolderConfig ).appendTo(page);
 
-    // Every source have a different background
-    // initially we set the background of the first source
-
-    tabs = tabris.create('TabFolder',
-        { left: 0, top: 0, right: 0, background: tabsDef[0].color, textColor: 'white' ,  bottom:0 , elevation: 8 ,
-            tabBarLocation: "top",
-            paging: true,}).appendTo(page);
-
-    tabris.ui.set({background: tabsDef[0].color, textColor: 'white' });
+    // We update the UI based on the theme and active tab.
+    updateUIColors(tabsDef[0].color);
 
     counter = 0;
 
@@ -38,8 +33,7 @@ exports.init = function() {
         tabsDef.forEach(function( thisTab ){
             if( tab.get('title') == thisTab.name ) {
                 url = thisTab.feed;
-                tabris.ui.set({background: thisTab.color, textColor: 'white' });
-                tabs.set({background: thisTab.color, textColor: 'white'});
+                updateUIColors(thisTab.color);
                 // refresh( counter ); // optionally we could refresh everytime the users change their selections
             }
             counter++;
@@ -107,6 +101,24 @@ exports.init = function() {
 
         _refresh = false;
     }
+
+    // refresh the ui styling based on the theme (and color passed.
+    function updateUIColors(color){
+        if(config.theme === 'light'){
+            tabris.ui.set({background: 'white', textColor: color });
+            tabs.set({background: 'white', textColor: color});
+        }
+        else if (config.theme === 'full') {
+            tabris.ui.set({background: color, textColor: 'white' });
+            tabs.set({background: color, textColor: 'white'});
+        }
+        else if (config.theme === 'normal') {
+            tabris.ui.set({background: color, textColor: 'white' });
+            tabs.set({background: 'white',textColor: color});
+        }
+        // If the theme is other then just fall back to system defaults.
+    }
+
 
     // We are close to run this thing but before of that
 
