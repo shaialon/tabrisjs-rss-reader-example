@@ -25,14 +25,14 @@ exports.init = function(){
 
 	// And finally we display the body
 	//	var body = c.label( c.get('content') );
-	var fontSize = tabris.device.get("platform") === "iOS" ? 'font-size: 290%; ' : 'font-size: 100%; ';
+	var font = tabris.device.get("platform") === "iOS" ? "font-size: 290%; font-family:'Helvetica Neue';" : 'font-size: 100%; ';
 	var padding = tabris.device.get("platform") === "iOS" ? 'padding: 0px 20px 0px 20px;' : '';
-	var fixedhtml = '<style>body{background:transparent; '+fontSize + padding+'} html{ background: transparent; } img{width: 100%; max-width: 100%;  } .pubDate{color:#ccc}</style>';
+	var fixedhtml = '<style>body{background:transparent; '+font + padding+'} html{ background: transparent; } img{width: 100%; max-width: 100%;  } .pubDate{color:#ccc}</style>';
 
 	var body2 = tabris.create('WebView',
 		{ left: 0, right: 0, top: 0, bottom: 0}).appendTo(page);
 
-	body2.set("html", '<html><head>'+fixedhtml+'</head></bod><h1>'+c.get('title')+'</h1><h4 class="pubDate">'+c.get('pubDate')+'</h4> ' + c.get('content') + '</body></html>');
+	body2.set("html", '<html><head>'+fixedhtml+'</head></bod><h2>'+c.get('title')+'</h2><h4 class="pubDate">'+c.get('pubDate')+'</h4> ' + c.get('content') + '</body></html>');
 
 	//	body.set({font:'15px'});
 }
