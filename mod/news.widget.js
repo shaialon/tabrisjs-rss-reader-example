@@ -3,7 +3,7 @@
 // @author: Carlos Ernesto López
 // @contact: facebook.com/c.ernest.1990
 
-exports.wgnews = function( counter , imageResolver ) {
+exports.wgnews = function( counter , tabDefinition ) {
     return tabris.create("CollectionView", {
         id: 'list_' + counter,
         layoutData: {left: 0, top: 0, right: 0, bottom: 0},
@@ -39,8 +39,8 @@ exports.wgnews = function( counter , imageResolver ) {
 
                 item.enclosure = item.enclosure || {};
                 var img = item.enclosure.link || item.enclosure.thumbnail;
-                if(imageResolver){
-                    img = imageResolver(item);
+                if(tabDefinition.imageResolver){
+                    img = tabDefinition.imageResolver(item);
                 }
                 else if(!img){
                     // Fallback, extract image from the content
@@ -57,6 +57,7 @@ exports.wgnews = function( counter , imageResolver ) {
     }).on("select", function(target, value) {
 
         c.set( 'title', value.title );
+        c.set( 'activeTabName', tabDefinition.name );
 
         // so we delete images tags and some copyrights tags
 

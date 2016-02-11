@@ -46,7 +46,7 @@ exports.init = function() {
     _nWidget = require('./news.widget.js').wgnews;
 
     for( x=0;x<tabsDef.length;x++ ) {
-        list[ x ] = _nWidget( x ,tabsDef[x].imageResolver );
+        list[ x ] = _nWidget( x ,tabsDef[x] );
         list[ x ].appendTo(_tabs[ x ]); // Also we add the list to the tab
         list[ x ].on('refresh', function(widget){
             _refresh = true;

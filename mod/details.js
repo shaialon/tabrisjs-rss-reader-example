@@ -6,7 +6,7 @@
 exports.init = function(){
 	// The first thing we need to do is create a page
 	// (The format of c.page is, c.page( title, topLevel?, Composite or ScrollView?, semiTransparent Background? ))
-	page = libs.page( 'RSS Reader Example', false, null, true );
+	page = libs.page( c.get('activeTabName'), false, null, true );
 
 	// We display the title with a cool serif font
 	//	var title = c.label(c.get('title'));
