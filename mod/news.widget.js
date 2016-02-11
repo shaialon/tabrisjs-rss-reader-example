@@ -37,23 +37,19 @@ exports.wgnews = function( counter , imageResolver ) {
                 title.set('text', item.title);
                 titleShadow.set('text', item.title);
 
-                try {
-
-                    item.enclosure = item.enclosure || {};
-                    var img = item.enclosure.link || item.enclosure.thumbnail;
-                    if(imageResolver){
-                        img = imageResolver(item);
-                        //console.log( 'Using: handler'+ img );
-                    }
-                    else if(!img){
-                        // Fallback, extract image from the content
-                        img = extractFirstImageFromHtml(item.description);
-                    }
-                    icon.set('image', img);
+                item.enclosure = item.enclosure || {};
+                var img = item.enclosure.link || item.enclosure.thumbnail;
+                if(imageResolver){
+                    img = imageResolver(item);
                 }
-                catch( error ) {
-                    icon.set('image', './images/notfound.png');
+                else if(!img){
+                    // Fallback, extract image from the content
+                    img = extractFirstImageFromHtml(item.description);
                 }
+                if(!img){
+                    img = './images/notfound.png';
+                }
+                icon.set('image', img);
 
                 date.set('text', item.pubDate);
             });
