@@ -3,66 +3,91 @@
 // @author: Carlos Ernesto López
 // @contact: facebook.com/c.ernest.1990
 
-exports.wgnews = function( counter ) {
-	return tabris.create("CollectionView", {
-      id: 'list_' + counter,
-      layoutData: {left: 0, top: 0, right: 0, bottom: 0},
-      items: [],
-      refreshEnabled: true,
-      initializeCell: function(cell){
-          var icon, title, titleShadow, date, bg;
+exports.wgnews = function( counter , imageResolver ) {
+    return tabris.create("CollectionView", {
+        id: 'list_' + counter,
+        layoutData: {left: 0, top: 0, right: 0, bottom: 0},
+        items: [],
+        itemHeight: 220,
+        refreshEnabled: true,
+        initializeCell: function(cell){
+            var icon, title, titleShadow, date, bg;
 
-          bg = tabris.create('Composite', { left: 0, right: 0, top: 0, bottom: 0 }).appendTo(cell);
+            bg = tabris.create('Composite', { left: 0, right: 0, top: 0, bottom: 0 }).appendTo(cell);
 
-          // the news picture is setted up 100% x 100%
+            // the news picture is setted up 100% x 100%
 
-          icon = tabris.create('ImageView', 
-                 { left: 0, right: 0, top: 2, bottom: 6, scaleMode: 'fill' }).appendTo(bg);
-          
-          date = tabris.create('TextView', 
-                  { right: 5, bottom: 10, font: '11px', textColor: '#666', width: 200, alignment: 'center' }).appendTo(bg);
-  
-          // Tabris doesn't include a function to add shadow to text, but we can use this simple trick
-          // create 2 textviews with exactly the same text and positioning almost at the same location, with just a few pixels of difference
+            icon = tabris.create('ImageView',
+                { left: 0, right: 0, top: 0, bottom: 1, scaleMode: 'fill' , background: "rgb(220, 220, 220)"}).appendTo(bg);
 
-		  		titleShadow = tabris.create('TextView', 
-		                    { maxLines: 2, font: '25px', left: 6.5, right: 5, bottom: [date, -3], textColor: '#000' }).appendTo(bg);
+            date = tabris.create('TextView',
+                { right: 5, bottom: 10, font: '11px', textColor: '#666', width: 200, alignment: 'center' }).appendTo(bg);
 
-		  		title = tabris.create('TextView', 
-                   { maxLines: 2, font: '25px', left: 5, right: 5, bottom: [date, -2], textColor: '#fff' }).appendTo(bg);
+            // Tabris doesn't include a function to add shadow to text, but we can use this simple trick
+            // create 2 textviews with exactly the same text and positioning almost at the same location, with just a few pixels of difference
 
-          cell.on("change:item", function(widget, item) {
-            
-            title.set('text', item.title);
-            titleShadow.set('text', item.title);
-              
-            try {
-                icon.set('image', item.enclosure.link.replace('https://', 'http://').replace('.jpg', '-320x210.jpg'));
-            }
-            catch( error ) {
-                icon.set('image', './images/notfound.png');
-            }
-              
-            date.set('text', item.pubDate);
-          });
-      }
+            titleShadow = tabris.create('TextView',
+                { maxLines: 2, font: '25px', left: 6.5, right: 5, bottom: [date, -3], textColor: '#000' }).appendTo(bg);
+
+            title = tabris.create('TextView',
+                { maxLines: 2, font: '25px', left: 5, right: 5, bottom: [date, -2], textColor: '#fff' }).appendTo(bg);
+
+            cell.on("change:item", function(widget, item) {
+
+                title.set('text', item.title);
+                titleShadow.set('text', item.title);
+
+                try {
+
+                    item.enclosure = item.enclosure || {};
+                    var img = item.enclosure.link || item.enclosure.thumbnail;
+                    if(imageResolver){
+                        img = imageResolver(item);
+                        //console.log( 'Using: handler'+ img );
+                    }
+                    else if(!img){
+                        // Fallback, extract from the content with regex.
+                        var m,
+                            urls = [],
+                            str = item.description,
+                            rex = /<img[^>]+src="?([^"\s]+)"?[^>]*\>/g;
+
+                        while ( m = rex.exec( str ) ) { // TODO: improve performance.
+                            urls.push( m[1] );
+                        }
+                        if(urls.length > 0){
+                            //console.log( 'Using: '+ urls[0] );
+                            img = urls[0]
+                        }
+
+                    }
+                    icon.set('image', img);
+                }
+                catch( error ) {
+                    icon.set('image', './images/notfound.png');
+                }
+
+                date.set('text', item.pubDate);
+            });
+        }
     }).on("select", function(target, value) {
 
-      c.set( 'title', value.title );
-      
-      // so we delete images tags and some copyrights tags
+        c.set( 'title', value.title );
 
-      c.set( 'content', value.content.replace(/<img[^>]+(>|$)/g, "").replace(/\u00a9 (.*?)<\/div>/g, '').replace(/\(cc\) (.*?)<\/div>/g, '') );
-      c.set( 'pubDate', value.pubDate );
-      
-      try {
-        // in this particular case we modify the images url in order to make them load faster 
-        c.set( 'icon', value.enclosure.link.replace('https://', 'http://').replace('.jpg', '-320x210.jpg') );
-      }
-      catch( error ) {
-        c.set( 'icon', 'none' );
-      }
-      
-      mods.details();
+        // so we delete images tags and some copyrights tags
+
+        //c.set( 'content', value.content.replace(/<img[^>]+(>|$)/g, "").replace(/\u00a9 (.*?)<\/div>/g, '').replace(/\(cc\) (.*?)<\/div>/g, '') );
+        c.set( 'content', value.content );
+        c.set( 'pubDate', value.pubDate );
+
+        try {
+            // in this particular case we modify the images url in order to make them load faster
+            c.set( 'icon', value.enclosure.link.replace('https://', 'http://').replace('.jpg', '-320x210.jpg') );
+        }
+        catch( error ) {
+            c.set( 'icon', 'none' );
+        }
+
+        mods.details();
     });
 }

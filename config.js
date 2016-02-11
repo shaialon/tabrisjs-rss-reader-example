@@ -5,17 +5,50 @@
 
 var config = {
 
-  appName: 'Tabris.js RSS Reader', // You probably will use the app name in many places so is a good practice to set it in the config file
-  securitySalt: 'myxssrtabrix123', // You can add an extra security layer to LocalStorage by adding a security salt to the keys 
-  backgroundColor: 'teal',
-  modules: 'details,news', // The filenames in the mod/ folder without the .js
-  defaultModule: 'news',
-  libs: 'page', // Libraries included in the lib/ folder we need in the app
+    appName: 'Tabris.js RSS Reader', // You probably will use the app name in many places so is a good practice to set it in the config file
+    securitySalt: 'myxssrtabrix123', // You can add an extra security layer to LocalStorage by adding a security salt to the keys
+    modules: 'details,news', // The filenames in the mod/ folder without the .js
+    defaultModule: 'news',
+    libs: 'page', // Libraries included in the lib/ folder we need in the app
 
- // For this particular app i added a news Sources setting so you can easily play with sources and check how fast is creating an app with Tabris
-  newsSources: ['Belelu|#FF4D4D|http://rss2json.com/api.json?rss_url=https%3A%2F%2Ffeeds.feedburner.com%2Fbelel',
-                'Fayerwayer|#333|http://rss2json.com/api.json?rss_url=https%3A%2F%2Ffeeds.feedburner.com%2Ffayerwayer',
-                'Bolido|#369|http://rss2json.com/api.json?rss_url=https%3A%2F%2Ffeeds.feedburner.com%2Fbolido']
+    // For this particular app i added a news Sources setting so you can easily play with sources and check how fast is creating an app with Tabris
+    channels: [
+        {
+            name: 'TechRadar',
+            color: '#2F6E91',
+            feed: rss('http://www.techradar.com/rss')
+            // imageResolver Just falls back with the image to extracting from the content.
+        },
+        {
+            name: 'TechCrunch',
+            color: '#0A9E01',
+            feed: rss('http://feeds.feedburner.com/Techcrunch'),
+            imageResolver: function(feedItem){
+                if(feedItem.enclosure && feedItem.enclosure.link){
+                    // TODO: device width!
+                    return feedItem.enclosure.link + '?w=410' //request a custom size of img. Supported only on techcrunch
+                }
+                return './images/notfound.png';
+            }
+        },
+        {
+            name: 'Fayerwayer',
+            color: '#333',
+            feed: rss('http://feeds.feedburner.com/fayerwayer'),
+            imageResolver: function(feedItem){
+                if(feedItem.enclosure && feedItem.enclosure.link){
+                    // TODO: device width!
+                    return feedItem.enclosure.link.replace('https://', 'http://').replace('.jpg', '-320x210.jpg')
+                }
+                return './images/notfound.png';
+            }
+        }
+    ]
+}
+
+
+function rss(feedUrl){
+    return 'http://rss2json.com/api.json?rss_url='+encodeURIComponent(feedUrl);
 }
 
 exports.config = config;
