@@ -28,7 +28,7 @@ exports.init = function() {
     _tabs = [];
 
     tabsDef.forEach(function( thisTab ){
-        _tabs[ counter ] = tabris.create( 'Tab', { title: thisTab.name, background: thisTab.color } ).appendTo(tabs);
+        _tabs[ counter ] = tabris.create( 'Tab', { title: thisTab.name, background: 'white' } ).appendTo(tabs);
         counter++;
     });
 

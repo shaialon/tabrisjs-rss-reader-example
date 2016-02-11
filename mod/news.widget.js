@@ -18,7 +18,7 @@ exports.wgnews = function( counter , imageResolver ) {
             // the news picture is setted up 100% x 100%
 
             icon = tabris.create('ImageView',
-                { left: 0, right: 0, top: 0, bottom: 1, scaleMode: 'fill' , background: "rgb(220, 220, 220)"}).appendTo(bg);
+                { left: 0, right: 0, top: 1, bottom: 0, scaleMode: 'fill' , background: "rgb(220, 220, 220)"}).appendTo(bg);
 
             date = tabris.create('TextView',
                 { right: 5, bottom: 10, font: '11px', textColor: '#666', width: 200, alignment: 'center' }).appendTo(bg);
