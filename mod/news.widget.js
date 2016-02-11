@@ -61,9 +61,7 @@ exports.wgnews = function( counter , tabDefinition ) {
 
         // so we delete images tags and some copyrights tags
 
-        //c.set( 'content', value.content.replace(/<img[^>]+(>|$)/g, "").replace(/\u00a9 (.*?)<\/div>/g, '').replace(/\(cc\) (.*?)<\/div>/g, '') );
-        
-        c.set( 'content', value.content.replace(/<a href="http:\/\/feeds.feedburner.com.*?<\/a>/ig,'') );
+        c.set( 'content', sanitizeHTMLfromFeedBloat(value.content) );
         c.set( 'pubDate', value.pubDate );
 
         try {
@@ -86,4 +84,8 @@ function extractFirstImageFromHtml(html) {
     m = rex.exec( html );
     if(m && m[1]) { return m[1]; }
     return null;
+}
+
+function sanitizeHTMLfromFeedBloat(html){
+    return html.replace(/<a href="http:\/\/feeds.feedburner.com.*?<\/a>/ig,'').replace(/<br clear="all".*?alt="">/im,'')
 }
