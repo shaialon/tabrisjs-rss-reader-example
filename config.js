@@ -17,13 +17,13 @@ var config = {
         {
             name: 'TechRadar',
             color: '#2F6E91',
-            feed: rss('http://www.techradar.com/rss')
+            feed: rss2json('http://www.techradar.com/rss')
             // imageResolver Just falls back with the image to extracting from the content.
         },
         {
             name: 'TechCrunch',
             color: '#0A9E01',
-            feed: rss('http://feeds.feedburner.com/Techcrunch'),
+            feed: rss2json('http://feeds.feedburner.com/Techcrunch'),
             imageResolver: function(feedItem){
                 if(feedItem.enclosure && feedItem.enclosure.link){
                     // TODO: device width!
@@ -35,7 +35,7 @@ var config = {
         {
             name: 'Fayerwayer',
             color: '#333',
-            feed: rss('http://feeds.feedburner.com/fayerwayer'),
+            feed: rss2json('http://feeds.feedburner.com/fayerwayer'),
             imageResolver: function(feedItem){
                 if(feedItem.enclosure && feedItem.enclosure.link){
                     // TODO: device width!
@@ -48,7 +48,7 @@ var config = {
 }
 
 
-function rss(feedUrl){
+function rss2json(feedUrl){
     return 'http://rss2json.com/api.json?rss_url='+encodeURIComponent(feedUrl);
 }
 
