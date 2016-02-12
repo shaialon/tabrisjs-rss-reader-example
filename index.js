@@ -6,8 +6,6 @@
 // Inject the config into the global scope?
 config = require('./config.js').config;
 
-isIOS = tabris.device.get("platform") === "iOS";
-
 // Web Services
 loading = false;
 Promise = require("promise");
