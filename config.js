@@ -88,10 +88,6 @@ var config = {
         //    feed: rss2json('http://www.economist.com/topics/computer-technology/index.xml'),
         //},
 
-
-
-
-
     ]
 }
 // TODO: external linking
