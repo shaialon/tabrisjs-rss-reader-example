@@ -11,31 +11,25 @@ exports.wgnews = function( counter , tabDefinition ) {
         itemHeight: 220,
         refreshEnabled: true,
         initializeCell: function(cell){
-            var icon, title, titleShadow, date, bg;
+            var icon, title, bg;
+            var bottomMargin = 1;
+            var themeStyle = getThemeCellStyle(tabDefinition.color);
 
-            bg = tabris.create('Composite', { left: 0, right: 0, top: 0, bottom: 0 }).appendTo(cell);
+            bg = tabris.create('Composite', { left: 0, right: 0, top: 0, bottom: 0 , background: themeStyle.background}).appendTo(cell);
 
             // the news picture is setted up 100% x 100%
-
             icon = tabris.create('ImageView',
-                { left: 0, right: 0, top: 1, bottom: 0, scaleMode: 'fill' , background: "rgb(220, 220, 220)"}).appendTo(bg);
+                { left: 0, right: 0, top: 1, bottom: 0+bottomMargin, scaleMode: 'fill' , background: "rgb(220, 220, 220)"}).appendTo(bg);
 
-            date = tabris.create('TextView',
-                { right: 5, bottom: 10, font: '11px', textColor: '#666', width: 200, alignment: 'center' }).appendTo(bg);
-
-            // Tabris doesn't include a function to add shadow to text, but we can use this simple trick
-            // create 2 textviews with exactly the same text and positioning almost at the same location, with just a few pixels of difference
-
-            titleShadow = tabris.create('TextView',
-                { maxLines: 2, font: '25px', left: 6.5, right: 5, bottom: [date, -3], textColor: '#000' }).appendTo(bg);
+            tabris.create('Composite', { left: 0, right: 0, height: 46, bottom: 0+bottomMargin ,background: themeStyle.overlayBG, opacity: 0.8}).appendTo(bg);
 
             title = tabris.create('TextView',
-                { maxLines: 2, font: '25px', left: 5, right: 5, bottom: [date, -2], textColor: '#fff' }).appendTo(bg);
+                { maxLines: 2, font: '16px', left: 10, right: 10, bottom: 4+bottomMargin, textColor: themeStyle.textColor }).appendTo(bg);
 
             cell.on("change:item", function(widget, item) {
 
                 title.set('text', item.title);
-                titleShadow.set('text', item.title);
+                //titleShadow.set('text', item.title);
 
                 item.enclosure = item.enclosure || {};
                 var img = item.enclosure.link || item.enclosure.thumbnail;
@@ -51,7 +45,7 @@ exports.wgnews = function( counter , tabDefinition ) {
                 }
                 icon.set('image', img);
 
-                date.set('text', item.pubDate);
+                //date.set('text', item.pubDate);
             });
         }
     }).on("select", function(target, value) {
@@ -63,14 +57,6 @@ exports.wgnews = function( counter , tabDefinition ) {
 
         c.set( 'content', sanitizeHTMLfromFeedBloat(value.content) );
         c.set( 'pubDate', value.pubDate );
-
-        try {
-            // in this particular case we modify the images url in order to make them load faster
-            c.set( 'icon', value.enclosure.link.replace('https://', 'http://').replace('.jpg', '-320x210.jpg') );
-        }
-        catch( error ) {
-            c.set( 'icon', 'none' );
-        }
 
         mods.details();
     });
@@ -88,4 +74,28 @@ function extractFirstImageFromHtml(html) {
 
 function sanitizeHTMLfromFeedBloat(html){
     return html.replace(/<a href="http:\/\/feeds.feedburner.com.*?<\/a>/ig,'').replace(/<br clear="all".*?alt="">/im,'')
+}
+
+function getThemeCellStyle(color){
+    if (config.theme === 'light'){
+        return {
+            background: 'white',
+            overlayBG: 'white',
+            textColor: color
+        }
+    }
+    else if (config.theme === 'normal'){
+        return {
+            background: 'white',
+            overlayBG: color,
+            textColor: 'white'
+        }
+    }
+    else if (config.theme === 'full'){
+        return {
+            background: color,
+            overlayBG: color,
+            textColor: 'white'
+        }
+    }
 }
