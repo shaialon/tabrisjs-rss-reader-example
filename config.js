@@ -14,11 +14,18 @@ var config = {
 
     // For this particular app i added a news Sources setting so you can easily play with sources and check how fast is creating an app with Tabris
     channels: [
+        {   // GOOD
+            name: 'LifeHacker',
+            color: '#709602',
+            feed: rss2json('http://lifehacker.com/rss'),
+        },
         {
             name: 'TechRadar',
             color: '#2F6E91',
-            feed: rss2json('http://www.techradar.com/rss')
-            // imageResolver Just falls back with the image to extracting from the content.
+            feed: rss2json('http://www.techradar.com/rss'),
+            contentSanitizer: function(html){
+                return html.replace(/<br clear="all".*?alt="">/igm,'');
+            }
         },
         {
             name: 'TechCrunch',
@@ -46,17 +53,11 @@ var config = {
         //    }
         //},
 
-        {   // GOOD
-            name: 'Gizmodo',
-            color: '#333',
-            feed: rss2json('http://gizmodo.com/rss'),
-        },
-
-        {   // GOOD
-            name: 'LifeHacker',
-            color: '#709602',
-            feed: rss2json('http://lifehacker.com/rss'),
-        },
+        //{   // GOOD
+        //    name: 'Gizmodo',
+        //    color: '#333',
+        //    feed: rss2json('http://gizmodo.com/rss'),
+        //},
 
         //{   // Good (performance issues?)
         //    name: 'SmashingMagazine',

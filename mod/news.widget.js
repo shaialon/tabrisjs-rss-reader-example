@@ -43,7 +43,7 @@ exports.wgnews = function( counter , tabDefinition ) {
                 if(!img){
                     img = './images/notfound.png';
                 }
-                console.log(tabDefinition.name +' : '+img);
+                //console.log(tabDefinition.name +' : '+img);
                 icon.set('image', img);
 
                 //date.set('text', item.pubDate);

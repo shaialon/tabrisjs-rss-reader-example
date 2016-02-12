@@ -81,7 +81,7 @@ exports.init = function() {
                 return res.json();
             }).then(function( res ){
                 //console.log("Got items "+counter)
-                var itemsUsed = sanitizeFeedItems (res.items);
+                var itemsUsed = sanitizeFeedItems (res.items , tabsDef[counter].contentSanitizer);
                 list[counter].insert(itemsUsed, -1);
                 list[counter].reveal(0);
                 //list[counter].set('items', res.items );
@@ -139,11 +139,11 @@ exports.init = function() {
 
 
 
-function sanitizeFeedItems(feedItems){
+function sanitizeFeedItems(feedItems, customSanitizer){
     var results = [];
     feedItems.forEach(function(item){
         if(item.title && item.title.length>0){
-            item.cleanContent = sanitizeHTMLfromFeedBloat(item.content);
+            item.cleanContent = customSanitizer ? customSanitizer (item.content) : sanitizeHTMLfromFeedBloat(item.content);
             delete item.content;
             results.push(item);
         }
@@ -154,7 +154,6 @@ function sanitizeFeedItems(feedItems){
 function sanitizeHTMLfromFeedBloat(html){
     var tmp = html.replace(/<a href="http:\/\/feeds.feedburner.com.*?<\/a>/ig,'') // remove feedburner crap
                 .replace(/<img src="http:\/\/feeds.feedburner.com.*?>/ig,'') // remove feedburner crap
-               .replace(/<br clear="all".*?alt="">/im,'')                      // remove share ctas
                .replace(/<img src="http:\/\/rss.buysellads.*?>/ig,'')// remove speckboy tracking pixels.
                .replace(/<table width="650".*?<\/table>/igm,'')   // ads in table (smashing magazine)
 
@@ -163,4 +162,3 @@ function sanitizeHTMLfromFeedBloat(html){
     return tmp;
 
 }
-
