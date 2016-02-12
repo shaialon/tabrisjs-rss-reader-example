@@ -53,9 +53,6 @@ exports.wgnews = function( counter , tabDefinition ) {
 
         c.set( 'title', value.title );
         c.set( 'activeTabName', tabDefinition.name );
-
-        // so we delete images tags and some copyrights tags
-
         c.set( 'content', value.cleanContent );
         c.set( 'pubDate', value.pubDate );
 
