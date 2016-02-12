@@ -55,6 +55,7 @@ exports.wgnews = function( counter , tabDefinition ) {
         c.set( 'activeTabName', tabDefinition.name );
         c.set( 'content', value.cleanContent );
         c.set( 'pubDate', value.pubDate );
+        c.set( 'activeFeedItemLink', value.link);
 
         mods.details();
     });
