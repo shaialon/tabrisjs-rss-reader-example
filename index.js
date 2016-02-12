@@ -3,18 +3,10 @@
 // @author: Carlos Ernesto López
 // @contact: facebook.com/c.ernest.1990
 
+// Inject the config into the global scope?
 config = require('./config.js').config;
 
 isIOS = tabris.device.get("platform") === "iOS";
-
-// Including Libs
-libs = [];
-config.libs.split(',').forEach(function(lib){
-  libs[ lib ] = require('./lib/' + lib + '.js').init;
-});
-
-// Pages
-pageCounter = 0;
 
 // Web Services
 loading = false;

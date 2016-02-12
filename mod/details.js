@@ -6,24 +6,23 @@
 exports.init = function(){
 	// The first thing we need to do is create a page
 	// (The format of c.page is, c.page( title, topLevel?, Composite or ScrollView?, semiTransparent Background? ))
-	page = libs.page( c.get('activeTabName'), false, null, true );
+	var page = tabris.create("Page", { title: c.get('activeTabName'), topLevel: false });
 
 	activeFeedItemLink = c.get('activeFeedItemLink');
 
-	//var openLinkAction = tabris.create("Action", {
-	//	id: "openLink",
-	//	title: "Link",
-	//	placementPriority: "high",
-	//	image: {src: "images/refresh.png", scale: 3}
-	//}).on("select", function() {
-	//	body.dispose();
-	//	tabris.create('WebView', { url: activeFeedItemLink, left: 0, right: 0, top: 0, bottom: 0}).appendTo(page);
-	//});
+	var openLinkAction = tabris.create("Action", {
+		id: "openLink",
+		title: "Link",
+		placementPriority: "high",
+		image: {src: "images/refresh.png", scale: 3}
+	}).on("select", function() {
+		body.dispose();
+		tabris.create('WebView', { url: activeFeedItemLink, left: 0, right: 0, top: 0, bottom: 0}).appendTo(page);
+	});
 
-	//tabris.ui.activePage().on("disappear", function(){
-	//	openLinkAction.set('visible',false);
-	//	//tabris.ui.children("#openLink").set('visible',false);
-	//});
+	page.on("disappear", function(){
+		openLinkAction.dispose();
+	});
 
 
 	var font = tabris.device.get("platform") === "iOS" ? "font-size: 290%; font-family:'Helvetica Neue';" : 'font-size: 100%; ';
@@ -38,4 +37,5 @@ exports.init = function(){
 
 	body.set("html", '<html><head>'+fixedhtml+'</head><body><h2>'+c.get('title')+'</h2><h4 class="pubDate">'+c.get('pubDate')+'</h4> ' + c.get('content') + '</body></html>');
 
+	page.open();
 }

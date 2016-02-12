@@ -5,7 +5,8 @@
 
 exports.init = function() {
     // Ok we need a page to contain all the crazy things we are going to create
-    var page = libs.page(config.appName, true);
+    var page = tabris.create("Page", { title:config.appName , topLevel : true}) ;
+    page.open();
 
     // Now we will create a tab per source
     var tabsDef = config.channels;
