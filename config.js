@@ -14,24 +14,24 @@ var config = {
 
     // For this particular app i added a news Sources setting so you can easily play with sources and check how fast is creating an app with Tabris
     channels: [
-        //{
-        //    name: 'TechRadar',
-        //    color: '#2F6E91',
-        //    feed: rss2json('http://www.techradar.com/rss')
-        //    // imageResolver Just falls back with the image to extracting from the content.
-        //},
-        //{
-        //    name: 'TechCrunch',
-        //    color: '#0A9E01',
-        //    feed: rss2json('http://feeds.feedburner.com/Techcrunch'),
-        //    imageResolver: function(feedItem){
-        //        if(feedItem.enclosure && feedItem.enclosure.link){
-        //            // TODO: device width!
-        //            return feedItem.enclosure.link + '?w=410' //request a custom size of img. Supported only on techcrunch
-        //        }
-        //        return './images/notfound.png';
-        //    }
-        //},
+        {
+            name: 'TechRadar',
+            color: '#2F6E91',
+            feed: rss2json('http://www.techradar.com/rss')
+            // imageResolver Just falls back with the image to extracting from the content.
+        },
+        {
+            name: 'TechCrunch',
+            color: '#0A9E01',
+            feed: rss2json('http://feeds.feedburner.com/Techcrunch'),
+            imageResolver: function(feedItem){
+                if(feedItem.enclosure && feedItem.enclosure.link){
+                    // TODO: device width!
+                    return feedItem.enclosure.link + '?w=410' //request a custom size of img. Supported only on techcrunch
+                }
+                return './images/notfound.png';
+            }
+        },
 
         //{
         //    name: 'Fayerwayer',
@@ -46,29 +46,29 @@ var config = {
         //    }
         //},
 
-        //{   // GOOD
-        //    name: 'Gizmodo',
-        //    color: '#333',
-        //    feed: rss2json('http://gizmodo.com/rss'),
-        //},
-
-        //{   // GOOD
-        //    name: 'LifeHacker',
-        //    color: '#709602',
-        //    feed: rss2json('http://lifehacker.com/rss'),
-        //},
-
-        {   // Good
-            name: 'SmashingMagazine',
-            color: '#E53F2C',
-            feed: rss2json('http://www.smashingmagazine.com/feed'),
+        {   // GOOD
+            name: 'Gizmodo',
+            color: '#333',
+            feed: rss2json('http://gizmodo.com/rss'),
         },
 
-        {   // no images..
-            name: 'ScienceDaily',
-            color: '#004276',
-            feed: rss2json('http://www.sciencedaily.com/rss/top/technology.xml'),
+        {   // GOOD
+            name: 'LifeHacker',
+            color: '#709602',
+            feed: rss2json('http://lifehacker.com/rss'),
         },
+
+        //{   // Good (performance issues?)
+        //    name: 'SmashingMagazine',
+        //    color: '#E53F2C',
+        //    feed: rss2json('http://www.smashingmagazine.com/feed'),
+        //},
+        //
+        //{   // no images..
+        //    name: 'ScienceDaily',
+        //    color: '#004276',
+        //    feed: rss2json('http://www.sciencedaily.com/rss/top/technology.xml'),
+        //},
 
         //{   // Needs image in detail
         //    name: 'PCWorld',
@@ -82,11 +82,11 @@ var config = {
         //    feed: rss2json('http://speckyboy.com/feed'),
         //},
 
-        {   // no images..
-            name: 'Economist',
-            color: '#8f0d10',
-            feed: rss2json('http://www.economist.com/topics/computer-technology/index.xml'),
-        },
+        //{   // no images..
+        //    name: 'Economist',
+        //    color: '#8f0d10',
+        //    feed: rss2json('http://www.economist.com/topics/computer-technology/index.xml'),
+        //},
 
 
 
