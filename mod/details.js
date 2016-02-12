@@ -10,7 +10,11 @@ exports.init = function(){
 
 	var font = tabris.device.get("platform") === "iOS" ? "font-size: 290%; font-family:'Helvetica Neue';" : 'font-size: 100%; ';
 	var padding = tabris.device.get("platform") === "iOS" ? 'padding: 10px 30px 0px 30px;' : 'padding: 10px 10px 0px 10px;';
-	var fixedhtml = '<style>body{background:transparent; '+font + padding+'} html{ background: transparent; } img{width: 100%; max-width: 100%; margin-bottom: 10px; } .pubDate{color:#5A5A5A}</style>';
+	var img = tabris.device.get("platform") === "iOS" ? 'width:100%;' : 'max-width: 100%;';
+
+
+
+	var fixedhtml = '<style>body{background:transparent; '+font + padding+'} html{ background: transparent; } img{ ' + img + ' } .pubDate{color:#5A5A5A}</style>';
 
 	var body = tabris.create('WebView', { left: 0, right: 0, top: 0, bottom: 0}).appendTo(page);
 
