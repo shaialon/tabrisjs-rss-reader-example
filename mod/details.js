@@ -3,12 +3,8 @@
 // @author: Carlos Ernesto López
 // @contact: facebook.com/c.ernest.1990
 
-exports.init = function(){
-	// The first thing we need to do is create a page
-	// (The format of c.page is, c.page( title, topLevel?, Composite or ScrollView?, semiTransparent Background? ))
-	var page = tabris.create("Page", { title: c.get('activeTabName'), topLevel: false });
-
-	activeFeedItemLink = c.get('activeFeedItemLink');
+exports.init = function(pageTitle, feedItem){
+	var page = tabris.create("Page", { title: pageTitle, topLevel: false });
 
 	var openLinkAction = tabris.create("Action", {
 		id: "openLink",
@@ -17,7 +13,7 @@ exports.init = function(){
 		image: {src: "images/refresh.png", scale: 3}
 	}).on("select", function() {
 		body.dispose();
-		tabris.create('WebView', { url: activeFeedItemLink, left: 0, right: 0, top: 0, bottom: 0}).appendTo(page);
+		tabris.create('WebView', { url: feedItem.link, left: 0, right: 0, top: 0, bottom: 0}).appendTo(page);
 	});
 
 	page.on("disappear", function(){
@@ -35,7 +31,7 @@ exports.init = function(){
 
 	var body = tabris.create('WebView', { left: 0, right: 0, top: 0, bottom: 0}).appendTo(page);
 
-	body.set("html", '<html><head>'+fixedhtml+'</head><body><h2>'+c.get('title')+'</h2><h4 class="pubDate">'+c.get('pubDate')+'</h4> ' + c.get('content') + '</body></html>');
+	body.set("html", '<html><head>'+fixedhtml+'</head><body><h2>'+ feedItem.title +'</h2><h4 class="pubDate">'+ feedItem.pubDate +'</h4> ' + feedItem.cleanContent + '</body></html>');
 
 	page.open();
 }

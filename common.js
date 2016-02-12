@@ -18,8 +18,4 @@ exports.common = {
     return localStorage.getItem( config.securitySalt + varName ) || '';
   },
 
-  // You will probably show a lot of notifications and another kind of messages, here is simply as c.toast('Hi');
-  toast: function( msg ) {
-    window.plugins.toast.showShortBottom( msg );
-  }
 }

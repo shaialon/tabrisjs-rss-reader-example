@@ -22,13 +22,12 @@ exports.wgnews = function( counter , tabDefinition ) {
 
             tabris.create('Composite', { left: 0, right: 0, height: 46, bottom: 0+bottomMargin ,background: themeStyle.overlayBG, opacity: 0.8}).appendTo(bg);
 
-            title = tabris.create('TextView',
-                { maxLines: 2, font: '16px', left: 10, right: 10, bottom: 4+bottomMargin, textColor: themeStyle.textColor }).appendTo(bg);
+            title = tabris.create('TextView', { maxLines: 2, font: '16px', left: 10, right: 10, bottom: 4+bottomMargin, textColor: themeStyle.textColor }).appendTo(bg);
 
             cell.on("change:item", function(widget, item) {
 
                 title.set('text', item.title);
-                
+
                 item.enclosure = item.enclosure || {};
                 var img = item.enclosure.link;
                 if(tabDefinition.imageResolver){
@@ -46,14 +45,7 @@ exports.wgnews = function( counter , tabDefinition ) {
             });
         }
     }).on("select", function(target, value) {
-
-        c.set( 'title', value.title );
-        c.set( 'activeTabName', tabDefinition.name );
-        c.set( 'content', value.cleanContent );
-        c.set( 'pubDate', value.pubDate );
-        c.set( 'activeFeedItemLink', value.link);
-
-        mods.details();
+        mods.details(tabDefinition.name, value);
     });
 }
 
