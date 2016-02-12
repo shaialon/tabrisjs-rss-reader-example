@@ -32,17 +32,18 @@ exports.wgnews = function( counter , tabDefinition ) {
                 //titleShadow.set('text', item.title);
 
                 item.enclosure = item.enclosure || {};
-                var img = item.enclosure.link || item.enclosure.thumbnail;
+                var img = item.enclosure.link;
                 if(tabDefinition.imageResolver){
                     img = tabDefinition.imageResolver(item);
                 }
                 else if(!img){
                     // Fallback, extract image from the content
-                    img = extractFirstImageFromHtml(item.description);
+                    img = extractFirstImageFromHtml(item.cleanContent);
                 }
                 if(!img){
                     img = './images/notfound.png';
                 }
+                console.log(tabDefinition.name +' : '+img);
                 icon.set('image', img);
 
                 //date.set('text', item.pubDate);
@@ -55,7 +56,7 @@ exports.wgnews = function( counter , tabDefinition ) {
 
         // so we delete images tags and some copyrights tags
 
-        c.set( 'content', sanitizeHTMLfromFeedBloat(value.content) );
+        c.set( 'content', value.cleanContent );
         c.set( 'pubDate', value.pubDate );
 
         mods.details();
@@ -70,10 +71,6 @@ function extractFirstImageFromHtml(html) {
     m = rex.exec( html );
     if(m && m[1]) { return m[1]; }
     return null;
-}
-
-function sanitizeHTMLfromFeedBloat(html){
-    return html.replace(/<a href="http:\/\/feeds.feedburner.com.*?<\/a>/ig,'').replace(/<br clear="all".*?alt="">/im,'')
 }
 
 function getThemeCellStyle(color){

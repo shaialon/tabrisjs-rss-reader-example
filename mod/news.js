@@ -80,10 +80,13 @@ exports.init = function() {
             fetch( url ).then(function( res ){
                 return res.json();
             }).then(function( res ){
-                list[counter].insert(res.items, -1);
+                //console.log("Got items "+counter)
+                var itemsUsed = sanitizeFeedItems (res.items);
+                list[counter].insert(itemsUsed, -1);
                 list[counter].reveal(0);
+                //list[counter].set('items', res.items );
 
-                cache[url] = res.items;
+                cache[url] = itemsUsed;
                 loading = false;
                 list[counter].set('refreshIndicator', false);
                 list[counter].set('refreshMessage', '');
@@ -133,3 +136,31 @@ exports.init = function() {
     for(x=0;x<tabsDef.length;x++)
         refresh(x);
 }
+
+
+
+function sanitizeFeedItems(feedItems){
+    var results = [];
+    feedItems.forEach(function(item){
+        if(item.title && item.title.length>0){
+            item.cleanContent = sanitizeHTMLfromFeedBloat(item.content);
+            delete item.content;
+            results.push(item);
+        }
+    })
+    return results;
+}
+
+function sanitizeHTMLfromFeedBloat(html){
+    var tmp = html.replace(/<a href="http:\/\/feeds.feedburner.com.*?<\/a>/ig,'') // remove feedburner crap
+                .replace(/<img src="http:\/\/feeds.feedburner.com.*?>/ig,'') // remove feedburner crap
+               .replace(/<br clear="all".*?alt="">/im,'')                      // remove share ctas
+               .replace(/<img src="http:\/\/rss.buysellads.*?>/ig,'')// remove speckboy tracking pixels.
+               .replace(/<table width="650".*?<\/table>/igm,'')   // ads in table (smashing magazine)
+
+    //console.log("SANITIZED:");
+    //console.log(tmp);
+    return tmp;
+
+}
+
