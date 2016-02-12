@@ -10,7 +10,6 @@ var config = {
     modules: 'details,news', // The filenames in the mod/ folder without the .js
     defaultModule: 'news',
     theme: 'normal', // Theme accepts 'normal', 'light', 'full' ... anything else will just stick to system defaults.
-    libs: 'page', // Libraries included in the lib/ folder we need in the app
 
     // For this particular app i added a news Sources setting so you can easily play with sources and check how fast is creating an app with Tabris
     channels: [
@@ -91,7 +90,6 @@ var config = {
 
     ]
 }
-// TODO: external linking
 
 function rss2json(feedUrl){
     return 'http://rss2json.com/api.json?rss_url='+encodeURIComponent(feedUrl);

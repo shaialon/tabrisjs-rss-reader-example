@@ -6,7 +6,7 @@
 exports.init = function() {
     // Ok we need a page to contain all the crazy things we are going to create
     var page = tabris.create("Page", { title:config.appName , topLevel : true}) ;
-    page.open();
+
 
     // Now we will create a tab per source
     var tabsDef = config.channels;
@@ -53,7 +53,6 @@ exports.init = function() {
             _refresh = true;
             refresh( widget.get('id').replace('list_', '') );
         });
-        //list[ x ].set('itemHeight', 140);
     }
 
 
@@ -133,9 +132,11 @@ exports.init = function() {
     url = tabsDef[0].feed; // We set the default url
 
     // Initially we get the news for all the tabs
-
-    for(x=0;x<tabsDef.length;x++)
+    for(x=0;x<tabsDef.length;x++){
         refresh(x);
+    }
+    page.open();
+
 }
 
 

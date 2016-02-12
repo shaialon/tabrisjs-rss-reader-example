@@ -17,7 +17,6 @@ exports.wgnews = function( counter , tabDefinition ) {
 
             bg = tabris.create('Composite', { left: 0, right: 0, top: 0, bottom: 0 , background: themeStyle.background}).appendTo(cell);
 
-            // the news picture is setted up 100% x 100%
             icon = tabris.create('ImageView',
                 { left: 0, right: 0, top: 1, bottom: 0+bottomMargin, scaleMode: 'fill' , background: "rgb(220, 220, 220)"}).appendTo(bg);
 
@@ -29,8 +28,7 @@ exports.wgnews = function( counter , tabDefinition ) {
             cell.on("change:item", function(widget, item) {
 
                 title.set('text', item.title);
-                //titleShadow.set('text', item.title);
-
+                
                 item.enclosure = item.enclosure || {};
                 var img = item.enclosure.link;
                 if(tabDefinition.imageResolver){
@@ -45,8 +43,6 @@ exports.wgnews = function( counter , tabDefinition ) {
                 }
                 //console.log(tabDefinition.name +' : '+img);
                 icon.set('image', img);
-
-                //date.set('text', item.pubDate);
             });
         }
     }).on("select", function(target, value) {
