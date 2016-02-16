@@ -1,8 +1,3 @@
-// Tabris.js RSS Reader
-// Feb 10, 2016
-// @author: Carlos Ernesto López
-// @contact: facebook.com/c.ernest.1990
-
 var config = {
     /******************************************
      *  Here, are some common technology RSS feeds, with their respective:
@@ -13,6 +8,9 @@ var config = {
 
     appName: 'Tabris.js RSS Reader Example',
     theme: 'normal',
+    //theme: 'light',
+    //theme: 'full',
+    //theme: tabris.device.get("platform") === "iOS" ? 'light' : 'full', // Define a certain theme for iOS and different for Android
 
     /******************************************
     *  Here, are some common technology RSS feeds, with their respective:

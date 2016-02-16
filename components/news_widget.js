@@ -10,25 +10,32 @@ module.exports = function( counter , feedConfig ) {
         refreshEnabled: true,
         _feedConfig: feedConfig,
         initializeCell: function(cell){
-            var icon, title, bg;
-            var themeStyle = getThemeCellStyle(feedConfig.color);
 
-            container = tabris.create('Composite', { left: 0, right: 0, top: 0, bottom: 0 , background: themeStyle.background}).appendTo(cell);
-
-            icon = tabris.create('ImageView', { left: 0, right: 0, top: 1, bottom: 1, scaleMode: 'fill' , background: "rgb(220, 220, 220)"}).appendTo(container);
-
-            tabris.create('Composite', { left: 0, right: 0, height: 46, bottom: 1 ,background: themeStyle.overlayBG, opacity: 0.8}).appendTo(container);
-
-            title = tabris.create('TextView', { maxLines: 2, font: '16px', left: 10, right: 10, bottom: 5, textColor: themeStyle.textColor }).appendTo(container);
+            var style = cellStyle(feedConfig);
+            var container = tabris.create('Composite', style.container).appendTo(cell),
+                icon      = tabris.create('ImageView', style.image).appendTo(container),
+                overlay   = tabris.create('Composite', style.overlay).appendTo(container),
+                title     = tabris.create('TextView',  style.title).appendTo(container);
 
             cell.on("change:item", function(widget, item) {
                 title.set('text', item.title);
                 icon.set('image', helpers.resolveImageForFeedItem(item ,feedConfig.imageResolver) );
             });
         }
-    }).on("select", function(target, value) {
-        detailScreen.open(feedConfig.name, value);
+    }).on("select", function(target, feedItem) {
+        detailScreen.open(feedConfig.name, feedItem);
     });
+}
+
+
+function cellStyle(feedConfig){
+    var themeStyle = getThemeCellStyle(feedConfig.color);
+    return {
+        container : { left: 0, right: 0, top: 0, bottom: 0 , background: themeStyle.background},
+        image: { left: 0, right: 0, top: 1, bottom: 1, scaleMode: 'fill' , background: "rgb(220, 220, 220)"},
+        overlay: { left: 0, right: 0, height: 46, bottom: 1 ,background: themeStyle.overlayBG, opacity: 0.8},
+        title: { maxLines: 2, font: '16px', left: 10, right: 10, bottom: 5, textColor: themeStyle.textColor }
+    }
 }
 
 
