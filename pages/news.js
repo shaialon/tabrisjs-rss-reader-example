@@ -3,6 +3,8 @@
 // @author: Carlos Ernesto López
 // @contact: facebook.com/c.ernest.1990
 var newsWidget = require('./../components/news_widget');
+var helpers = require('./../helpers');
+
 
 function init() {
     // Ok we need a page to contain all the crazy things we are going to create
@@ -81,7 +83,7 @@ function init() {
                 return res.json();
             }).then(function( res ){
                 //console.log("Got items "+counter)
-                var itemsUsed = sanitizeFeedItems (res.items , tabsDef[counter].contentSanitizer);
+                var itemsUsed = helpers.sanitizeFeedItems (res.items , tabsDef[counter].contentSanitizer);
                 list[counter].insert(itemsUsed, -1);
                 list[counter].reveal(0);
                 //list[counter].set('items', res.items );
@@ -149,26 +151,3 @@ module.exports = {
     open: open
 }
 
-function sanitizeFeedItems(feedItems, customSanitizer){
-    var results = [];
-    feedItems.forEach(function(item){
-        if(item.title && item.title.length>0){
-            item.cleanContent = customSanitizer ? customSanitizer (item.content) : sanitizeHTMLfromFeedBloat(item.content);
-            delete item.content;
-            results.push(item);
-        }
-    })
-    return results;
-}
-
-function sanitizeHTMLfromFeedBloat(html){
-    var tmp = html.replace(/<a href="http:\/\/feeds.feedburner.com.*?<\/a>/ig,'') // remove feedburner crap
-                .replace(/<img src="http:\/\/feeds.feedburner.com.*?>/ig,'') // remove feedburner crap
-               .replace(/<img src="http:\/\/rss.buysellads.*?>/ig,'')// remove speckboy tracking pixels.
-               .replace(/<table width="650".*?<\/table>/igm,'')   // ads in table (smashing magazine)
-
-    //console.log("SANITIZED:");
-    //console.log(tmp);
-    return tmp;
-
-}

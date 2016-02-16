@@ -4,6 +4,7 @@
 // @contact: facebook.com/c.ernest.1990
 
 var detailScreen = require('./../pages/details');
+var helpers = require('./../helpers');
 
 module.exports = function( counter , tabDefinition ) {
     return tabris.create("CollectionView", {
@@ -37,7 +38,7 @@ module.exports = function( counter , tabDefinition ) {
                 }
                 else if(!img){
                     // Fallback, extract image from the content
-                    img = extractFirstImageFromHtml(item.cleanContent);
+                    img = helpers.extractFirstImageFromHtml(item.cleanContent);
                 }
                 if(!img){
                     img = './images/notfound.png';
@@ -51,15 +52,6 @@ module.exports = function( counter , tabDefinition ) {
     });
 }
 
-
-function extractFirstImageFromHtml(html) {
-    var m,
-        rex = /<img[^>]+src="?([^"\s]+)"?[^>]*\>/g;
-
-    m = rex.exec( html );
-    if(m && m[1]) { return m[1]; }
-    return null;
-}
 
 function getThemeCellStyle(color){
     if (config.theme === 'light'){
