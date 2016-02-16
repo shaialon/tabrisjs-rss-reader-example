@@ -18,7 +18,6 @@ function sanitizeHTMLfromFeedBloat(html){
 		.replace(/<img src="http:\/\/feeds.feedburner.com.*?>/ig,'') // remove feedburner crap
 		.replace(/<img src="http:\/\/rss.buysellads.*?>/ig,'')// remove speckboy tracking pixels.
 		.replace(/<table width="650".*?<\/table>/igm,'')   // ads in table (smashing magazine)
-
 	return tmp;
 
 }

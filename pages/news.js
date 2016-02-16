@@ -3,12 +3,12 @@
 // @author: Carlos Ernesto López
 // @contact: facebook.com/c.ernest.1990
 var newsWidget = require('./../components/news_widget');
-var helpers = require('./../helpers');
+var helpers = require('./../helpers/feed_helpers');
 
 
 function init() {
     // Ok we need a page to contain all the crazy things we are going to create
-    var page = tabris.create("Page", { title:config.appName , topLevel : true}) ;
+    var page = tabris.create("Page", { title: config.appName , topLevel : true}) ;
 
 
     // Now we will create a tab per source
@@ -137,8 +137,8 @@ function init() {
     for(x=0;x<tabsDef.length;x++){
         refresh(x);
     }
-    page.open();
-    return page
+    
+    return page;
 }
 
 function open(){

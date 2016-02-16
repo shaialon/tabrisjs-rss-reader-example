@@ -4,7 +4,7 @@
 // @contact: facebook.com/c.ernest.1990
 
 var detailScreen = require('./../pages/details');
-var helpers = require('./../helpers');
+var helpers = require('./../helpers/feed_helpers');
 
 module.exports = function( counter , tabDefinition ) {
     return tabris.create("CollectionView", {

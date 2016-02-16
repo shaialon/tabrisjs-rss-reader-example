@@ -1,7 +1,11 @@
 // Tabris.js RSS Reader
-// Feb 10, 2016
+// This project was originally started by the awesome Tabris.js power user:
 // @author: Carlos Ernesto López
 // @contact: facebook.com/c.ernest.1990
+//
+// It was since modified in structure, and added extra functionality (like themes, custom image resolver, content sanitizers and more) by.
+// Shai Alon
+// https://github.com/shaialon
 
 // Inject the config into the global scope?
 config = require('./config.js').config;
@@ -12,7 +16,7 @@ Promise = require("promise");
 require("whatwg-fetch");
 
 // Include common function
-c = require('./common.js').common;
+//c = require('./common.js').common;
 
 // Run
-require('./pages/'+config.defaultPage).open();
+require('./pages/news').open();
