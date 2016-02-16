@@ -1,5 +1,7 @@
+var config = require('./../config.js').config;
 var newsWidgetComponent = require('./../components/news_widget');
 var feedHelpers = require('./../helpers/feed_helpers');
+var updateUIColors = require('./../styles/general.js').updateUIColors;
 
 function init() {
     // Ok we need a page to contain all the crazy things we are going to create
@@ -18,7 +20,7 @@ function init() {
 
     // So now we add the tabs to the Tab Container
     var list = [];
-    
+
     tabsDef.forEach(function( rssFeed , index ){
         var tab = tabris.create( 'Tab', { title: rssFeed.name, background: 'white', _feedConfig: rssFeed} ).appendTo(tabs);
 
@@ -70,26 +72,6 @@ function init() {
 
 
     }
-
-    // refresh the ui styling based on the theme (and color passed.
-    function updateUIColors(color){
-        if(config.theme === 'light'){
-            tabris.ui.set({background: 'white', textColor: color });
-            tabs.set({background: 'white', textColor: color});
-        }
-        else if (config.theme === 'full') {
-            tabris.ui.set({background: color, textColor: 'white' });
-            tabs.set({background: color, textColor: 'white'});
-        }
-        else if (config.theme === 'normal') {
-            tabris.ui.set({background: color, textColor: 'white' });
-            tabs.set({background: 'white',textColor: color});
-        }
-        // If the theme is other then just fall back to system defaults.
-    }
-
-
-    // We are close to run this thing but before of that
 
     //_refresh = false; // why we need to know when the user is refreshing? because refreshing is an async process
                       // and if the user refresh 100 times the app could even crash,
