@@ -16,26 +16,20 @@ function init() {
     // We update the UI based on the theme and active tab.
     updateUIColors(tabsDef[0].color);
 
-    counter = 0;
-
     // So now we add the tabs to the Tab Container
     _tabs = [];
 
-    tabsDef.forEach(function( thisTab ){
-        _tabs[ counter ] = tabris.create( 'Tab', { title: thisTab.name, background: 'white' } ).appendTo(tabs);
-        counter++;
+    tabsDef.forEach(function( thisTab , index ){
+        _tabs[ index ] = tabris.create( 'Tab', { title: thisTab.name, background: 'white' } ).appendTo(tabs);
     });
 
     // When the user change the tab we need to change the tab container background
     tabs.on("change:selection", function(widget, tab) {
-        counter = 0;
         tabsDef.forEach(function( thisTab ){
             if( tab.get('title') == thisTab.name ) {
                 url = thisTab.feed;
                 updateUIColors(thisTab.color);
-                // refresh( counter ); // optionally we could refresh everytime the users change their selections
             }
-            counter++;
         })
     });
 
