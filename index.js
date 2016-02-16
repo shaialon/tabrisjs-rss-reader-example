@@ -10,7 +10,7 @@
 // Inject the config into the global scope?
 config = require('./config.js').config;
 
-// Web Services
+// Shim Web Services
 loading = false;
 Promise = require("promise");
 require("whatwg-fetch");

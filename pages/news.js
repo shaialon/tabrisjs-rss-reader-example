@@ -1,10 +1,5 @@
-// Tabris.js RSS Reader
-// Feb 10, 2016
-// @author: Carlos Ernesto López
-// @contact: facebook.com/c.ernest.1990
 var newsWidget = require('./../components/news_widget');
 var helpers = require('./../helpers/feed_helpers');
-
 
 function init() {
     // Ok we need a page to contain all the crazy things we are going to create
@@ -137,7 +132,7 @@ function init() {
     for(x=0;x<tabsDef.length;x++){
         refresh(x);
     }
-    
+
     return page;
 }
 
