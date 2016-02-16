@@ -28,23 +28,8 @@ module.exports = function( counter , tabDefinition ) {
             title = tabris.create('TextView', { maxLines: 2, font: '16px', left: 10, right: 10, bottom: 4+bottomMargin, textColor: themeStyle.textColor }).appendTo(bg);
 
             cell.on("change:item", function(widget, item) {
-
                 title.set('text', item.title);
-
-                item.enclosure = item.enclosure || {};
-                var img = item.enclosure.link;
-                if(tabDefinition.imageResolver){
-                    img = tabDefinition.imageResolver(item);
-                }
-                else if(!img){
-                    // Fallback, extract image from the content
-                    img = helpers.extractFirstImageFromHtml(item.cleanContent);
-                }
-                if(!img){
-                    img = './images/notfound.png';
-                }
-                //console.log(tabDefinition.name +' : '+img);
-                icon.set('image', img);
+                icon.set('image', helpers.resolveImageForFeedItem(item ,tabDefinition.imageResolver) );
             });
         }
     }).on("select", function(target, value) {
