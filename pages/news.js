@@ -1,5 +1,5 @@
-var newsWidget = require('./../components/news_widget');
-var helpers = require('./../helpers/feed_helpers');
+var newsWidgetComponent = require('./../components/news_widget');
+var feedHelpers = require('./../helpers/feed_helpers');
 
 function init() {
     // Ok we need a page to contain all the crazy things we are going to create
@@ -38,7 +38,7 @@ function init() {
     var list = [];
 
     for( x=0;x<tabsDef.length;x++ ) {
-        list[ x ] = newsWidget( x ,tabsDef[x] );
+        list[ x ] = newsWidgetComponent( x ,tabsDef[x] );
         list[ x ].appendTo(_tabs[ x ]); // Also we add the list to the tab
         list[ x ].on('refresh', function(widget){
             _refresh = true;
@@ -57,7 +57,7 @@ function init() {
         getItems( counter );
     }
 
-    cache = []; // Stores cached information
+
 
     // This function get the info from the web service using the Fetch function
 
@@ -65,35 +65,21 @@ function init() {
         loading = true;
         url = tabsDef[counter].feed;
 
-        // If the url is not in cache or the user is refreshing we get the info from the RSS
-        if( (typeof cache[url] == 'undefined' || cache[url] == '') || _refresh == true )
+        fetch( url ).then(function( res ){
+            return res.json();
+        }).then(function( res ){
+            //console.log("Got items "+counter)
+            var itemsUsed = feedHelpers.sanitizeFeedItems (res.items , tabsDef[counter].contentSanitizer);
+            //list[counter].insert(itemsUsed, -1);
+            //list[counter].reveal(0);
+            list[counter].set('items', itemsUsed );
 
-            fetch( url ).then(function( res ){
-                return res.json();
-            }).then(function( res ){
-                //console.log("Got items "+counter)
-                var itemsUsed = helpers.sanitizeFeedItems (res.items , tabsDef[counter].contentSanitizer);
-                list[counter].insert(itemsUsed, -1);
-                list[counter].reveal(0);
-                //list[counter].set('items', res.items );
-
-                cache[url] = itemsUsed;
-                loading = false;
-                list[counter].set('refreshIndicator', false);
-                list[counter].set('refreshMessage', '');
-            });
-
-        // If not we get the info from cache
-        else {
-
-            list[counter].set('items', cache[url] );
             loading = false;
             list[counter].set('refreshIndicator', false);
             list[counter].set('refreshMessage', '');
+        });
 
-        }
 
-        _refresh = false;
     }
 
     // refresh the ui styling based on the theme (and color passed.
@@ -119,8 +105,6 @@ function init() {
     _refresh = false; // why we need to know when the user is refreshing? because refreshing is an async process
                       // and if the user refresh 100 times the app could even crash,
                       // so one refresh at time ok?
-
-    url = tabsDef[0].feed; // We set the default url
 
     // Initially we get the news for all the tabs
     for(x=0;x<tabsDef.length;x++){
