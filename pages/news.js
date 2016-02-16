@@ -1,7 +1,7 @@
 var config = require('./../config.js').config;
 var newsWidgetComponent = require('./../components/news_widget');
-var feedHelpers = require('./../helpers/feed_helpers');
 var updateUIColors = require('./../styles/general.js').updateUIColors;
+var getRssFeedItems = require('./../services/rss_fetch.js').getRssFeedItems;
 
 function init() {
     // Ok we need a page to contain all the crazy things we are going to create
@@ -54,22 +54,16 @@ function init() {
 
     function getItems( counter ) {
         loading = true;
-        url = tabsDef[counter].feed;
 
-        fetch( url ).then(function( res ){
-            return res.json();
-        }).then(function( res ){
-            //console.log("Got items "+counter)
-            var itemsUsed = feedHelpers.sanitizeFeedItems (res.items , tabsDef[counter].contentSanitizer);
-            //list[counter].insert(itemsUsed, -1);
-            //list[counter].reveal(0);
-            list[counter].set('items', itemsUsed );
+        getRssFeedItems(tabsDef[counter]).then(function(items){
+            list[counter].set('items', items );
 
             loading = false;
             list[counter].set('refreshIndicator', false);
             list[counter].set('refreshMessage', '');
+        }).catch(function(err){
+            console.log("CATCH");
         });
-
 
     }
 
