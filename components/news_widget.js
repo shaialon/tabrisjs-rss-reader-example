@@ -3,7 +3,9 @@
 // @author: Carlos Ernesto López
 // @contact: facebook.com/c.ernest.1990
 
-exports.wgnews = function( counter , tabDefinition ) {
+var detailScreen = require('./../pages/details');
+
+module.exports = function( counter , tabDefinition ) {
     return tabris.create("CollectionView", {
         id: 'list_' + counter,
         layoutData: {left: 0, top: 0, right: 0, bottom: 0},
@@ -45,7 +47,7 @@ exports.wgnews = function( counter , tabDefinition ) {
             });
         }
     }).on("select", function(target, value) {
-        mods.details(tabDefinition.name, value);
+        detailScreen.open(tabDefinition.name, value);
     });
 }
 

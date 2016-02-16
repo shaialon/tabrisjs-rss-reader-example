@@ -15,7 +15,7 @@ require("whatwg-fetch");
 mods = [];
 
 config.modules.split(',').forEach(function( mod ){
-  mods[ mod ] = require('./mod/' + mod + '.js' ).init;
+  mods[ mod ] = require('./pages/' + mod + '.js' ).init;
 });
 
 // Include common function

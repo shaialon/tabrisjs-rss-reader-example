@@ -2,6 +2,7 @@
 // Feb 10, 2016
 // @author: Carlos Ernesto López
 // @contact: facebook.com/c.ernest.1990
+var newsWidget = require('./../components/news_widget');
 
 exports.init = function() {
     // Ok we need a page to contain all the crazy things we are going to create
@@ -44,10 +45,9 @@ exports.init = function() {
     // Check the news.widget.js file for more information but basically we crete the list and assign the refresh function to the onRefresh event
 
     var list = [];
-    _nWidget = require('./news.widget.js').wgnews;
 
     for( x=0;x<tabsDef.length;x++ ) {
-        list[ x ] = _nWidget( x ,tabsDef[x] );
+        list[ x ] = newsWidget( x ,tabsDef[x] );
         list[ x ].appendTo(_tabs[ x ]); // Also we add the list to the tab
         list[ x ].on('refresh', function(widget){
             _refresh = true;
