@@ -1,8 +1,3 @@
-// Tabris.js RSS Reader
-// Feb 10, 2016
-// @author: Carlos Ernesto López
-// @contact: facebook.com/c.ernest.1990
-
 function init(pageTitle, feedItem){
 	var page = tabris.create("Page", { title: pageTitle, topLevel: false });
 

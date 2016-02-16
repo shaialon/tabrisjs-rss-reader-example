@@ -24,7 +24,7 @@ var config = {
     *  imageResolver    - A custom function since each feed has a certain placement for the images or the ability to load lightweight images with a certain parameter (see TechCrunch or FayerWayer)
     *
     *************************************/
-    channels: [
+    rssFeeds: [
         {   // GOOD
             name: 'LifeHacker',
             color: '#709602',

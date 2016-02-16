@@ -9,19 +9,19 @@ function init() {
 
 
     // Now we will create a tab per source
-    var tabsDef = config.channels;
+    var rssFeeds = config.rssFeeds;
 
     // So we need a Tab Container
     var tabFolderConfig = { left: 0, top: 0, right: 0, bottom:0 , elevation: 8 , tabBarLocation: "top", paging: true};
     tabs = tabris.create('TabFolder', tabFolderConfig ).appendTo(page);
 
     // We update the UI based on the theme and active tab.
-    updateUIColors(tabsDef[0].color);
+    updateUIColors(rssFeeds[0].color);
 
     // So now we add the tabs to the Tab Container
     var list = [];
 
-    tabsDef.forEach(function( rssFeed , index ){
+    rssFeeds.forEach(function( rssFeed , index ){
         var tab = tabris.create( 'Tab', { title: rssFeed.name, background: 'white', _feedConfig: rssFeed} ).appendTo(tabs);
 
         list[ index ] = newsWidgetComponent( index , rssFeed );
@@ -55,7 +55,7 @@ function init() {
     function getItems( counter ) {
         loading = true;
 
-        getRssFeedItems(tabsDef[counter]).then(function(items){
+        getRssFeedItems(rssFeeds[counter]).then(function(items){
             list[counter].set('items', items );
 
             loading = false;
