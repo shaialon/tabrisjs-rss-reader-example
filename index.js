@@ -11,15 +11,8 @@ loading = false;
 Promise = require("promise");
 require("whatwg-fetch");
 
-// Modules
-mods = [];
-
-config.modules.split(',').forEach(function( mod ){
-  mods[ mod ] = require('./pages/' + mod + '.js' ).init;
-});
-
 // Include common function
 c = require('./common.js').common;
 
 // Run
-mods[ config.defaultModule ]();
+require('./pages/'+config.defaultPage).open();

@@ -4,7 +4,7 @@
 // @contact: facebook.com/c.ernest.1990
 var newsWidget = require('./../components/news_widget');
 
-exports.init = function() {
+function init() {
     // Ok we need a page to contain all the crazy things we are going to create
     var page = tabris.create("Page", { title:config.appName , topLevel : true}) ;
 
@@ -136,10 +136,18 @@ exports.init = function() {
         refresh(x);
     }
     page.open();
-
+    return page
 }
 
+function open(){
+    var p = init();
+    return p.open();
+}
 
+module.exports = {
+    init: init,
+    open: open
+}
 
 function sanitizeFeedItems(feedItems, customSanitizer){
     var results = [];

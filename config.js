@@ -8,7 +8,7 @@ var config = {
     appName: 'Tabris.js RSS Reader Example', // You probably will use the app name in many places so is a good practice to set it in the config file
     securitySalt: 'myxssrtabrix123', // You can add an extra security layer to LocalStorage by adding a security salt to the keys
     modules: 'details,news', // The filenames in the mod/ folder without the .js
-    defaultModule: 'news',
+    defaultPage: 'news',
     theme: 'normal', // Theme accepts 'normal', 'light', 'full' ... anything else will just stick to system defaults.
 
     // For this particular app i added a news Sources setting so you can easily play with sources and check how fast is creating an app with Tabris

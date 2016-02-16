@@ -3,12 +3,11 @@
 // @author: Carlos Ernesto López
 // @contact: facebook.com/c.ernest.1990
 
-var init = function(pageTitle, feedItem){
+function init(pageTitle, feedItem){
 	var page = tabris.create("Page", { title: pageTitle, topLevel: false });
 
 	var openLinkAction = tabris.create("Action", {
 		id: "openLink",
-		title: "Link",
 		placementPriority: "high",
 		image: {src: "images/refresh.png", scale: 3}
 	}).on("select", function() {
@@ -37,7 +36,7 @@ var init = function(pageTitle, feedItem){
 
 }
 
-var open = function(pageTitle, feedItem) {
+function open(pageTitle, feedItem) {
 	var p = init(pageTitle, feedItem)
 	return p.open();
 }
