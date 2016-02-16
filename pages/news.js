@@ -17,42 +17,31 @@ function init() {
     updateUIColors(tabsDef[0].color);
 
     // So now we add the tabs to the Tab Container
-    _tabs = [];
+    var list = [];
+    
+    tabsDef.forEach(function( rssFeed , index ){
+        var tab = tabris.create( 'Tab', { title: rssFeed.name, background: 'white', _feedConfig: rssFeed} ).appendTo(tabs);
 
-    tabsDef.forEach(function( thisTab , index ){
-        _tabs[ index ] = tabris.create( 'Tab', { title: thisTab.name, background: 'white' } ).appendTo(tabs);
+        list[ index ] = newsWidgetComponent( index , rssFeed );
+        list[ index ].appendTo(tab); // Also we add the list to the tab
+        list[ index ].on('refresh', function(widget){
+            refresh( widget.get('id').replace('list_', '') );
+        });
+        refresh(index);
     });
+
 
     // When the user change the tab we need to change the tab container background
     tabs.on("change:selection", function(widget, tab) {
-        tabsDef.forEach(function( thisTab ){
-            if( tab.get('title') == thisTab.name ) {
-                url = thisTab.feed;
-                updateUIColors(thisTab.color);
-            }
-        })
+        updateUIColors(tab.get('_feedConfig').color);
     });
-
-    // Check the news.widget.js file for more information but basically we crete the list and assign the refresh function to the onRefresh event
-
-    var list = [];
-
-    for( x=0;x<tabsDef.length;x++ ) {
-        list[ x ] = newsWidgetComponent( x ,tabsDef[x] );
-        list[ x ].appendTo(_tabs[ x ]); // Also we add the list to the tab
-        list[ x ].on('refresh', function(widget){
-            _refresh = true;
-            refresh( widget.get('id').replace('list_', '') );
-        });
-    }
-
 
     // Show the loading indicator and get the news
 
     function refresh( counter ) {
         list[counter].set({
             refreshIndicator: true,
-            refreshMessage: "loading..."
+            refreshMessage: "loading feed..."
         });
         getItems( counter );
     }
@@ -102,14 +91,9 @@ function init() {
 
     // We are close to run this thing but before of that
 
-    _refresh = false; // why we need to know when the user is refreshing? because refreshing is an async process
+    //_refresh = false; // why we need to know when the user is refreshing? because refreshing is an async process
                       // and if the user refresh 100 times the app could even crash,
                       // so one refresh at time ok?
-
-    // Initially we get the news for all the tabs
-    for(x=0;x<tabsDef.length;x++){
-        refresh(x);
-    }
 
     return page;
 }

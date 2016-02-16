@@ -15,8 +15,5 @@ loading = false;
 Promise = require("promise");
 require("whatwg-fetch");
 
-// Include common function
-//c = require('./common.js').common;
-
-// Run
+// Run the first page
 require('./pages/news').open();
