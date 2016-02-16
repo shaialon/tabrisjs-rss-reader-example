@@ -4,17 +4,24 @@
 // @contact: facebook.com/c.ernest.1990
 
 var config = {
-
-    appName: 'Tabris.js RSS Reader Example', // You probably will use the app name in many places so is a good practice to set it in the config file
-    theme: 'normal', // Theme accepts 'normal', 'light', 'full' ... anything else will just stick to system defaults.
     /******************************************
-    * Here, are some common technology RSS feeds, with their respective:
+     *  Here, are some common technology RSS feeds, with their respective:
+     *
+     *  appName  - The title of the tab and more...
+     *  theme    - TRY THIS! Theme accepts 'normal', 'light', 'full' ... anything else will just stick to system defaults.
+     **********************************/
+
+    appName: 'Tabris.js RSS Reader Example',
+    theme: 'normal',
+
+    /******************************************
+    *  Here, are some common technology RSS feeds, with their respective:
     *
     *  name             - The title of the tab
     *  color            - The color identified with the feed. Play around with the theme and see how this affects the UI.
     *  feed             - The url of the feed. If it is in XML use the rss2json function.
-    *  contentSanitizer - a custom function that can modify the html of the feed to remove all kind of bloat (ads, trackers, and ugly sharing buttons)
-    *  imageResolver    - each feed has a certain placement for the images or the ability to load lightweight images with a certain parameter (see TechCrunch or FayerWayer)
+    *  contentSanitizer - A custom function that can modify the html of the feed to remove all kind of bloat (ads, trackers, and ugly sharing buttons)
+    *  imageResolver    - A custom function since each feed has a certain placement for the images or the ability to load lightweight images with a certain parameter (see TechCrunch or FayerWayer)
     *
     *************************************/
     channels: [
