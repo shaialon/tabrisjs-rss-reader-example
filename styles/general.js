@@ -1,6 +1,9 @@
 var config = require('./../config.js').config;
 
-// refresh the ui styling based on the theme (and color passed.
+/*************************
+* refresh the ui styling based on the theme (and color passed).
+**************************/
+
 function updateUIColors(color){
 	if(config.theme === 'light'){
 		tabris.ui.set({background: 'white', textColor: color });
@@ -16,6 +19,14 @@ function updateUIColors(color){
 	}
 	// If the theme is other then just fall back to system defaults.
 }
+
+
+
+/*************************
+ * refresh the ui styling based on the theme (and color passed).
+ **************************/
+
+
 
 
 module.exports = {

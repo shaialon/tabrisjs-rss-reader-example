@@ -7,7 +7,7 @@ module.exports = function( feedConfig ) {
         items: [],
         itemHeight: 220,
         refreshEnabled: true,
-        _rssFeed: feedConfig,
+        _rssFeed: feedConfig, // Save the rssConfig used by this widget so it can be used later.
         initializeCell: function(cell){
 
             var style = cellStyle(feedConfig);
