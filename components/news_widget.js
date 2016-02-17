@@ -1,5 +1,4 @@
 var detailScreen = require('./../pages/details');
-var helpers = require('./../helpers/feed_helpers');
 var getRssFeedItems = require('./../services/rss_fetch.js').getRssFeedItems;
 
 module.exports = function( feedConfig ) {
@@ -19,7 +18,7 @@ module.exports = function( feedConfig ) {
 
             cell.on("change:item", function(widget, item) {
                 title.set('text', item.title);
-                icon.set('image', helpers.resolveImageForFeedItem(item ,feedConfig.imageResolver) );
+                icon.set('image', item.image );
             });
         }
     }).on("select", function(target, feedItem) {

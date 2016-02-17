@@ -6,6 +6,10 @@ function getRssFeedItems(feedConfig){
 			return res.json();
 		}).then(function( res ){
 			var itemsProcessed = feedHelpers.sanitizeFeedItems (res.items , feedConfig.contentSanitizer);
+			itemsProcessed.forEach(function(item){
+				item.image = feedHelpers.resolveImageForFeedItem(item ,feedConfig.imageResolver)
+			})
+
 			resolve(itemsProcessed);
 		});
 	});
