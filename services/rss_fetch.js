@@ -8,9 +8,10 @@ function getRssFeedItems(feedConfig){
 			var itemsProcessed = feedHelpers.sanitizeFeedItems (res.items , feedConfig.contentSanitizer);
 			itemsProcessed.forEach(function(item){
 				item.image = feedHelpers.resolveImageForFeedItem(item ,feedConfig.imageResolver)
-			})
-
+			});
 			resolve(itemsProcessed);
+		}).catch(function (err){
+			reject(err);
 		});
 	});
 }

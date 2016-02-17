@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget android-versionCode="1" id="com.eclipsesource.tabris.con" version="0.0.1" xmlns="http://www.w3.org/ns/widgets">
+    <name>Tabris.js RSS reader</name>
+    <description>
+        An exemplary Tabris.js Rss reader.
+    </description>
+    <author email="tabris@eclipsesource.com" href="https://tabrisjs.com">
+        EclipseSource
+    </author>
+    <access origin="*" />
+</widget>
