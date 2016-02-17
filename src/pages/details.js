@@ -1,4 +1,4 @@
-var WebViewInternalCSS = require('./../styles/general.js').WebViewInternalCSS;
+var WebViewInternalCSS = require('./../styles/general').WebViewInternalCSS;
 
 function init(pageTitle, feedItem){
 	var page = tabris.create("Page", { title: pageTitle, topLevel: false, _feedItem: feedItem });

@@ -1,6 +1,6 @@
 var config = require('./../config.js').config;
 var newsWidgetComponent = require('./../components/news_widget');
-var updateUIColors = require('./../styles/general.js').updateUIColors;
+var updateUIColors = require('./../styles/general').updateUIColors;
 
 function init() {
     // Ok we need a page to contain all the crazy things we are going to create

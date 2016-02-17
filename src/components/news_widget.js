@@ -1,6 +1,6 @@
-var getThemeRssItemStyle = require('./../styles/general.js').getThemeRssItemStyle;
+var getThemeRssItemStyle = require('./../styles/general').getThemeRssItemStyle;
 var detailScreen = require('./../pages/details');
-var getRssFeedItems = require('./../services/rss_fetch.js').getRssFeedItems;
+var getRssFeedItems = require('./../services/rss_fetch').getRssFeedItems;
 
 module.exports = function( feedConfig ) {
     var widget = tabris.create("CollectionView", {
