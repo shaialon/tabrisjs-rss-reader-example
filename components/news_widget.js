@@ -8,7 +8,7 @@ module.exports = function( counter , feedConfig ) {
         items: [],
         itemHeight: 220,
         refreshEnabled: true,
-        _feedConfig: feedConfig,
+        _rssFeed: feedConfig,
         initializeCell: function(cell){
 
             var style = cellStyle(feedConfig);

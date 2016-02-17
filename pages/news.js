@@ -19,48 +19,47 @@ function init() {
     updateUIColors(rssFeeds[0].color);
 
     // So now we add the tabs to the Tab Container
-    var list = [];
+    var list = {};
 
     rssFeeds.forEach(function( rssFeed , index ){
-        var tab = tabris.create( 'Tab', { title: rssFeed.name, background: 'white', _feedConfig: rssFeed} ).appendTo(tabs);
-
-        list[ index ] = newsWidgetComponent( index , rssFeed );
-        list[ index ].appendTo(tab); // Also we add the list to the tab
-        list[ index ].on('refresh', function(widget){
-            refresh( widget.get('id').replace('list_', '') );
+        var tab = tabris.create( 'Tab', { title: rssFeed.name, background: 'white', _rssFeed: rssFeed} ).appendTo(tabs);
+        var widget = newsWidgetComponent( index , rssFeed );
+        widget.appendTo(tab); // Also we add the list to the tab
+        widget.on('refresh', function(widget){
+            refreshNewsWidget( widget );
         });
-        refresh(index);
+        refreshNewsWidget(widget);
     });
 
 
     // When the user change the tab we need to change the tab container background
     tabs.on("change:selection", function(widget, tab) {
-        updateUIColors(tab.get('_feedConfig').color);
+        updateUIColors(tab.get('_rssFeed').color);
     });
 
     // Show the loading indicator and get the news
 
-    function refresh( counter ) {
-        list[counter].set({
+    function refreshNewsWidget( widget ) {
+        widget.set({
             refreshIndicator: true,
             refreshMessage: "loading feed..."
         });
-        getItems( counter );
+        getItems( widget );
     }
 
 
 
     // This function get the info from the web service using the Fetch function
 
-    function getItems( counter ) {
+    function getItems( widget ) {
         loading = true;
-
-        getRssFeedItems(rssFeeds[counter]).then(function(items){
-            list[counter].set('items', items );
+        //console.log(feed.name);
+        getRssFeedItems( widget.get('_rssFeed') ).then(function(items){
+            widget.set('items', items );
 
             loading = false;
-            list[counter].set('refreshIndicator', false);
-            list[counter].set('refreshMessage', '');
+            widget.set('refreshIndicator', false);
+            widget.set('refreshMessage', '');
         }).catch(function(err){
             console.log("CATCH");
         });
