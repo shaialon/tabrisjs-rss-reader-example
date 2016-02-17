@@ -40,30 +40,20 @@ function init() {
     // Show the loading indicator and get the news
 
     function refreshNewsWidget( widget ) {
-        widget.set({
-            refreshIndicator: true,
-            refreshMessage: "loading feed..."
-        });
-        getItems( widget );
-    }
-
-
-
-    // This function get the info from the web service using the Fetch function
-
-    function getItems( widget ) {
-        loading = true;
-        //console.log(feed.name);
-        getRssFeedItems( widget.get('_rssFeed') ).then(function(items){
+        updateWidgetLoading ( widget, true);
+        getRssFeedItems( widget.get('_rssFeed') ).then( function(items){
             widget.set('items', items );
-
-            loading = false;
-            widget.set('refreshIndicator', false);
-            widget.set('refreshMessage', '');
+            updateWidgetLoading ( widget, false );
         }).catch(function(err){
             console.log("CATCH");
         });
+    }
 
+    function updateWidgetLoading(widget,loading){
+        widget.set({
+            refreshIndicator: loading,
+            refreshMessage: loading ? "loading feed..." : ""
+        });
     }
 
     //_refresh = false; // why we need to know when the user is refreshing? because refreshing is an async process
