@@ -48,8 +48,36 @@ var platformStyling = {
 
 
 
+/*************************
+ * How the rssItem cells look in each of the different themes.
+ **************************/
+
+function getThemeRssItemStyle(color){
+	if (config.theme === 'light'){
+		return {
+			background: 'white',
+			overlayBG: 'white',
+			textColor: color
+		}
+	}
+	else if (config.theme === 'normal'){
+		return {
+			background: 'white',
+			overlayBG: color,
+			textColor: 'white'
+		}
+	}
+	else if (config.theme === 'full'){
+		return {
+			background: color,
+			overlayBG: color,
+			textColor: 'white'
+		}
+	}
+}
 
 module.exports = {
 	updateUIColors: updateUIColors,
-	WebViewInternalCSS:WebViewInternalCSS
+	WebViewInternalCSS:WebViewInternalCSS,
+	getThemeRssItemStyle:getThemeRssItemStyle
 };

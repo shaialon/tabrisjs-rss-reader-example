@@ -24,7 +24,6 @@ module.exports  = {
 
 function addViewAction(page){
 	var openLinkAction = tabris.create("Action", {
-		id: "openLink",
 		placementPriority: "high",
 		image: {src: "images/refresh.png", scale: 3}
 	}).on("select", function() {

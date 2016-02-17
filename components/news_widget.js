@@ -1,3 +1,4 @@
+var getThemeRssItemStyle = require('./../styles/general.js').getThemeRssItemStyle;
 var detailScreen = require('./../pages/details');
 var getRssFeedItems = require('./../services/rss_fetch.js').getRssFeedItems;
 
@@ -32,7 +33,7 @@ module.exports = function( feedConfig ) {
 
 
 function cellStyle(feedConfig){
-    var themeStyle = getThemeCellStyle(feedConfig.color);
+    var themeStyle = getThemeRssItemStyle(feedConfig.color);
     return {
         container : { left: 0, right: 0, top: 0, bottom: 0 , background: themeStyle.background},
         image: { left: 0, right: 0, top: 1, bottom: 1, scaleMode: 'fill' , background: "rgb(220, 220, 220)"},
@@ -42,43 +43,14 @@ function cellStyle(feedConfig){
 }
 
 
-function getThemeCellStyle(color){
-    if (config.theme === 'light'){
-        return {
-            background: 'white',
-            overlayBG: 'white',
-            textColor: color
-        }
-    }
-    else if (config.theme === 'normal'){
-        return {
-            background: 'white',
-            overlayBG: color,
-            textColor: 'white'
-        }
-    }
-    else if (config.theme === 'full'){
-        return {
-            background: color,
-            overlayBG: color,
-            textColor: 'white'
-        }
-    }
-}
-
-
-
 function refreshNewsWidget( widget ) {
     updateWidgetLoading ( widget, true);
     getRssFeedItems( widget.get('_rssFeed') ).then( function(items){
         widget.set('items', items );
         updateWidgetLoading ( widget, false );
     }).catch(function(err){
-        console.log("CATCH");
+        console.log("Something went wrong.");
     });
-    //_refresh = false; // why we need to know when the user is refreshing? because refreshing is an async process
-    // and if the user refresh 100 times the app could even crash,
-    // so one refresh at time ok?
 }
 
 function updateWidgetLoading(widget,loading){
