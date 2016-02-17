@@ -23,12 +23,33 @@ function updateUIColors(color){
 
 
 /*************************
- * refresh the ui styling based on the theme (and color passed).
+ * An internal css configuration for webviews per platform
  **************************/
+
+function WebViewInternalCSS(){
+	var styles = platformStyling[tabris.device.get("platform")];
+
+	return '<style> body {background:transparent; '+styles.font + styles.padding+'} html{ background: transparent; } img{ ' + styles.img + ' } .pubDate{color:#5A5A5A}</style>';
+}
+
+var platformStyling = {
+	iOS : {
+		font:"font-size: 290%; font-family:'Helvetica Neue';",
+		padding: 'padding: 10px 30px 0px 30px;',
+		img: 'width:100%;'
+
+	},
+	Android: {
+		font: 'font-size: 100%; ',
+		padding: 'padding: 10px 10px 0px 10px;',
+		img: 'max-width: 100%;'
+	}
+};
 
 
 
 
 module.exports = {
-	updateUIColors: updateUIColors
+	updateUIColors: updateUIColors,
+	WebViewInternalCSS:WebViewInternalCSS
 };

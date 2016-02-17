@@ -9,7 +9,6 @@
 
 // Inject the config into the global scope?
 config = require('./config.js').config;
-console.log( tabris.device.get("platform"));
 
 // Shim Web Services
 loading = false;
