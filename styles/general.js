@@ -28,12 +28,12 @@ function updateUIColors(page, color){
  **************************/
 
 function WebViewInternalCSS(){
-	var styles = platformStyling[tabris.device.get("platform")];
+	var styles = platformStylingWebView[tabris.device.get("platform")];
 
 	return '<style> body {background:transparent; '+styles.font + styles.padding+'} html{ background: transparent; } img{ ' + styles.img + ' } .pubDate{color:#5A5A5A}</style>';
 }
 
-var platformStyling = {
+var platformStylingWebView = {
 	iOS : {
 		font:"font-size: 290%; font-family:'Helvetica Neue';",
 		padding: 'padding: 10px 30px 0px 30px;',
