@@ -4,7 +4,8 @@ var config = require('./../config.js').config;
 * refresh the ui styling based on the theme (and color passed).
 **************************/
 
-function updateUIColors(color){
+function updateUIColors(page, color){
+	var tabs = page.get('_tabs');
 	if(config.theme === 'light'){
 		tabris.ui.set({background: 'white', textColor: color });
 		tabs.set({background: 'white', textColor: color});
