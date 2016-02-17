@@ -1,7 +1,6 @@
 var config = require('./../config.js').config;
 var newsWidgetComponent = require('./../components/news_widget');
 var updateUIColors = require('./../styles/general.js').updateUIColors;
-var getRssFeedItems = require('./../services/rss_fetch.js').getRssFeedItems;
 
 function init() {
     // Ok we need a page to contain all the crazy things we are going to create
@@ -19,16 +18,9 @@ function init() {
     updateUIColors(rssFeeds[0].color);
 
     // So now we add the tabs to the Tab Container
-    var list = {};
-
-    rssFeeds.forEach(function( rssFeed , index ){
+    rssFeeds.forEach(function( rssFeed ){
         var tab = tabris.create( 'Tab', { title: rssFeed.name, background: 'white', _rssFeed: rssFeed} ).appendTo(tabs);
-        var widget = newsWidgetComponent( index , rssFeed );
-        widget.appendTo(tab); // Also we add the list to the tab
-        widget.on('refresh', function(widget){
-            refreshNewsWidget( widget );
-        });
-        refreshNewsWidget(widget);
+        newsWidgetComponent( rssFeed ).appendTo(tab);
     });
 
 
@@ -36,25 +28,6 @@ function init() {
     tabs.on("change:selection", function(widget, tab) {
         updateUIColors(tab.get('_rssFeed').color);
     });
-
-    // Show the loading indicator and get the news
-
-    function refreshNewsWidget( widget ) {
-        updateWidgetLoading ( widget, true);
-        getRssFeedItems( widget.get('_rssFeed') ).then( function(items){
-            widget.set('items', items );
-            updateWidgetLoading ( widget, false );
-        }).catch(function(err){
-            console.log("CATCH");
-        });
-    }
-
-    function updateWidgetLoading(widget,loading){
-        widget.set({
-            refreshIndicator: loading,
-            refreshMessage: loading ? "loading feed..." : ""
-        });
-    }
 
     //_refresh = false; // why we need to know when the user is refreshing? because refreshing is an async process
                       // and if the user refresh 100 times the app could even crash,

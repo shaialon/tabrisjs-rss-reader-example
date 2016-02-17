@@ -1,9 +1,9 @@
 var detailScreen = require('./../pages/details');
 var helpers = require('./../helpers/feed_helpers');
+var getRssFeedItems = require('./../services/rss_fetch.js').getRssFeedItems;
 
-module.exports = function( counter , feedConfig ) {
-    return tabris.create("CollectionView", {
-        id: 'list_' + counter,
+module.exports = function( feedConfig ) {
+    var widget = tabris.create("CollectionView", {
         layoutData: {left: 0, top: 0, right: 0, bottom: 0},
         items: [],
         itemHeight: 220,
@@ -24,7 +24,11 @@ module.exports = function( counter , feedConfig ) {
         }
     }).on("select", function(target, feedItem) {
         detailScreen.open(feedConfig.name, feedItem);
+    }).on('refresh', function(widget){
+        refreshNewsWidget( widget );
     });
+    refreshNewsWidget(widget);
+    return widget;
 }
 
 
@@ -61,4 +65,23 @@ function getThemeCellStyle(color){
             textColor: 'white'
         }
     }
+}
+
+
+
+function refreshNewsWidget( widget ) {
+    updateWidgetLoading ( widget, true);
+    getRssFeedItems( widget.get('_rssFeed') ).then( function(items){
+        widget.set('items', items );
+        updateWidgetLoading ( widget, false );
+    }).catch(function(err){
+        console.log("CATCH");
+    });
+}
+
+function updateWidgetLoading(widget,loading){
+    widget.set({
+        refreshIndicator: loading,
+        refreshMessage: loading ? "loading feed..." : ""
+    });
 }
