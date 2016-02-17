@@ -76,6 +76,9 @@ function refreshNewsWidget( widget ) {
     }).catch(function(err){
         console.log("CATCH");
     });
+    //_refresh = false; // why we need to know when the user is refreshing? because refreshing is an async process
+    // and if the user refresh 100 times the app could even crash,
+    // so one refresh at time ok?
 }
 
 function updateWidgetLoading(widget,loading){
