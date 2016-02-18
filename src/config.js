@@ -36,18 +36,18 @@ var config = {
                 return html.replace(/<br clear="all".*?alt="">/igm,'');
             }
         },
-        {
-            name: 'TechCrunch',
-            color: '#0A9E01',
-            feed: rss2json('http://feeds.feedburner.com/Techcrunch'),
-            imageResolver: function(feedItem){
-                if(feedItem.enclosure && feedItem.enclosure.link){
-                    // TODO: device width!
-                    return feedItem.enclosure.link + '?w=410' //request a custom size of img. Supported only on techcrunch
-                }
-                return './images/notfound.png';
-            }
-        },
+        //{
+        //    name: 'TechCrunch',
+        //    color: '#0A9E01',
+        //    feed: rss2json('http://feeds.feedburner.com/Techcrunch'),
+        //    imageResolver: function(feedItem){
+        //        if(feedItem.enclosure && feedItem.enclosure.link){
+        //            // TODO: device width!
+        //            return feedItem.enclosure.link + '?w=410' //request a custom size of img. Supported only on techcrunch
+        //        }
+        //        return './images/notfound.png';
+        //    }
+        //},
 
         //{
         //    name: 'Fayerwayer',
@@ -97,6 +97,14 @@ var config = {
         //    color: '#8f0d10',
         //    feed: rss2json('http://www.economist.com/topics/computer-technology/index.xml'),
         //},
+
+        {
+            name: 'React',
+            color: '#05A9D6',
+            feed: rss2json('http://www.reactnative.com/rss/'),
+        },
+
+
 
     ]
 }
