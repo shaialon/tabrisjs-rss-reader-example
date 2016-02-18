@@ -97,12 +97,11 @@ var config = {
         //    color: '#8f0d10',
         //    feed: rss2json('http://www.economist.com/topics/computer-technology/index.xml'),
         //},
-
-        {
-            name: 'React',
-            color: '#05A9D6',
-            feed: rss2json('http://www.reactnative.com/rss/'),
-        },
+        //{
+        //    name: 'React',
+        //    color: '#05A9D6',
+        //    feed: rss2json('http://www.reactnative.com/rss/'),
+        //},
 
 
 
