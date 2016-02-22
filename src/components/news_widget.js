@@ -54,7 +54,7 @@ function refreshNewsWidget( widget ) {
         try {
             console.log(JSON.stringify(err));
         } catch (e){
-            
+
         }
     });
 }

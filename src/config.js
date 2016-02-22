@@ -7,8 +7,8 @@ var config = {
      **********************************/
 
     appName: 'Tabris.js RSS Reader Example',
-    //theme: 'normal',
-    theme: 'light',
+    theme: 'normal',
+    //theme: 'light',
     //theme: 'full',
     //theme: tabris.device.get("platform") === "iOS" ? 'light' : 'full', // Define a certain theme for iOS and different for Android
 
@@ -23,56 +23,56 @@ var config = {
     *
     *************************************/
     rssFeeds: [
-        //{   // GOOD
-        //    name: 'LifeHacker',
-        //    color: '#709602',
-        //    feed: rss2json('http://lifehacker.com/rss'),
-        //},
-        //{
-        //    name: 'TechRadar',
-        //    color: '#2F6E91',
-        //    feed: rss2json('http://www.techradar.com/rss'),
-        //    contentSanitizer: function(html){
-        //        return html.replace(/<br clear="all".*?alt="">/igm,'');
-        //    }
-        //},
-        //{
-        //    name: 'TechCrunch',
-        //    color: '#0A9E01',
-        //    feed: rss2json('http://feeds.feedburner.com/Techcrunch'),
-        //    imageResolver: function(feedItem){
-        //        if(feedItem.enclosure && feedItem.enclosure.link){
-        //            // TODO: device width!
-        //            return feedItem.enclosure.link + '?w=410' //request a custom size of img. Supported only on techcrunch
-        //        }
-        //        return './images/notfound.png';
-        //    }
-        //},
-
+        {   // GOOD
+            name: 'LifeHacker',
+            color: '#709602',
+            feed: rss2json('http://lifehacker.com/rss'),
+        },
         {
-            name: 'Fayerwayer',
-            color: '#333',
-            feed: rss2json('http://feeds.feedburner.com/fayerwayer'),
+            name: 'TechRadar',
+            color: '#2F6E91',
+            feed: rss2json('http://www.techradar.com/rss'),
+            contentSanitizer: function(html){
+                return html.replace(/<br clear="all".*?alt="">/igm,'');
+            }
+        },
+        {
+            name: 'TechCrunch',
+            color: '#0A9E01',
+            feed: rss2json('http://feeds.feedburner.com/Techcrunch'),
             imageResolver: function(feedItem){
                 if(feedItem.enclosure && feedItem.enclosure.link){
                     // TODO: device width!
-                    return feedItem.enclosure.link.replace('https://', 'http://').replace('.jpg', '-320x210.jpg')
+                    return feedItem.enclosure.link + '?w=410' //request a custom size of img. Supported only on techcrunch
                 }
                 return './images/notfound.png';
             }
         },
 
-        {   // GOOD
-            name: 'Gizmodo',
-            color: '#333',
-            feed: rss2json('http://gizmodo.com/rss'),
-        },
-
-        {   // Good (performance issues?)
-            name: 'SmashingMagazine',
-            color: '#E53F2C',
-            feed: rss2json('http://www.smashingmagazine.com/feed'),
-        },
+        //{
+        //    name: 'Fayerwayer',
+        //    color: '#333',
+        //    feed: rss2json('http://feeds.feedburner.com/fayerwayer'),
+        //    imageResolver: function(feedItem){
+        //        if(feedItem.enclosure && feedItem.enclosure.link){
+        //            // TODO: device width!
+        //            return feedItem.enclosure.link.replace('https://', 'http://').replace('.jpg', '-320x210.jpg')
+        //        }
+        //        return './images/notfound.png';
+        //    }
+        //},
+        //
+        //{   // GOOD
+        //    name: 'Gizmodo',
+        //    color: '#333',
+        //    feed: rss2json('http://gizmodo.com/rss'),
+        //},
+        //
+        //{   // Good (performance issues?)
+        //    name: 'SmashingMagazine',
+        //    color: '#E53F2C',
+        //    feed: rss2json('http://www.smashingmagazine.com/feed'),
+        //},
 
         //
         //{   // no images..
