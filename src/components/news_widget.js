@@ -49,7 +49,11 @@ function refreshNewsWidget( widget ) {
         widget.set('items', items );
         updateWidgetLoading ( widget, false );
     }).catch(function(err){
-        console.log("Something went wrong.");
+        console.log("Failed fetching rss items for: "+ widget.get('_rssFeed'));
+        console.log(err);
+        try{
+            console.log(JSON.stringify(err));
+        }
     });
 }
 
