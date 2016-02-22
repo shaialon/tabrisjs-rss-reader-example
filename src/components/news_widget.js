@@ -51,8 +51,10 @@ function refreshNewsWidget( widget ) {
     }).catch(function(err){
         console.log("Failed fetching rss items for: "+ widget.get('_rssFeed'));
         console.log(err);
-        try{
+        try {
             console.log(JSON.stringify(err));
+        } catch (e){
+            
         }
     });
 }
